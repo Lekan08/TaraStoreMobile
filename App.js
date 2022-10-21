@@ -1,10 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, Image } from "react-native";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Image source={require("./images/house_of_tara_logo.png")} />
+      <View style={{ borderRadius: 5 }}>
+        <Text
+          style={{
+            fontSize: 56,
+            color: "#ffffff",
+            paddingHorizontal: 0,
+            fontFamily: "serif",
+            width: 300,
+          }}
+        >
+          Let’s Help You Find Your Match
+        </Text>
+      </View>
+      <Text style={{ color: "#ffffff" }}>
+        Meeting the perfect one shouldn’t be a hassle.
+      </Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -13,8 +29,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#0F0F0F",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
