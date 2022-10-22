@@ -23,7 +23,7 @@ export default function AddTodo({ submitHandler }) {
             setText("");
           }
         }}
-        title="Add Todo"
+        title="Add More Todo"
         color="#F96D02"
       />
     </View>
