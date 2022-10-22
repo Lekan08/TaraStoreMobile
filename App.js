@@ -19,7 +19,7 @@ export default function App() {
         </Text>
       </View>
       <Text style={{ color: "#ffffff" }}>
-        Meeting the perfect one shouldn’t be a hassle.
+        Meeting the perfect Daniel  shouldn’t be a hassle.
       </Text>
       <StatusBar style="auto" />
     </View>
