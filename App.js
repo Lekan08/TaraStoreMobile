@@ -17,12 +17,11 @@ import {
 // import TodoItem from "./components/todoItem";
 // import AddTodo from "./components/addTodo";
 // import Sandbox from "./components/sandbox";
-
+// import {Ionicons} from '@ex'
 export default function App() {
   const [usernamex, setUsername] = useState("");
   const [passwordx, setPassword] = useState("");
   const [rPasswordx, setRPassword] = useState("");
-
 
   const handlePress = () => {
     const raw = JSON.stringify({
@@ -30,20 +29,35 @@ export default function App() {
       password: passwordx,
     });
     const myHeaders = {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     };
-    const requestOptions = {
-      method: "POST",
+
+    const url = "https://tarastoreservice.plutospace.space";
+    fetch(url + "http://users/doLogin", {
+      method: "GET",
       headers: myHeaders,
       body: raw,
-    };
-    fetch("https://mywebsite.com/endpoint/", requestOptions)
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((err) => {
-      console.log(err);
-     });
+    });
+    // const raw = JSON.stringify({
+    //   username: usernamex,
+    //   password: passwordx,
+    // });
+    // const myHeaders = {
+    //   "Accept": "application/json",
+    //   "Content-Type": "application/json",
+    // };
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: myHeaders,
+    //   body: raw,
+    // };
+    // fetch("https://mywebsite.com/endpoint/", requestOptions)
+    // .then((response) => response.json())
+    // .then((data) => console.log(data))
+    // .catch((err) => {
+    //   console.log(err);
+    //  });
   };
 
   const clickHandler = () => {
@@ -59,6 +73,23 @@ export default function App() {
     } else {
       handlePress();
     }
+
+    //fetching api
+    // const raw = JSON.stringify({
+    //   username: usernamex,
+    //   password: passwordx,
+    // });
+    // const myHeaders = {
+    //   Accept: "application/json",
+    //   "Content-Type": "application/json",
+    // };
+
+    // const url = "https://tarastoreservice.plutospace.space";
+    // fetch(url + "http://users/doLogin", {
+    //   method: "GET",
+    //   headers: myHeaders,
+    //   body: raw,
+    // });
   };
 
   return (
@@ -105,9 +136,9 @@ export default function App() {
             secureTextEntry={true}
             placeholderTextColor={"#777"}
           />
-          <Text style={styles.inputText}>Retype Password:</Text>
+          <Text style={styles.inputText}>Confirm Password:</Text>
           <TextInput
-            placeholder="Retype password"
+            placeholder="Confirm Password"
             value={rPasswordx}
             onChangeText={(value) => setRPassword(value)}
             style={styles.input}
@@ -117,19 +148,28 @@ export default function App() {
           <TouchableOpacity onPress={clickHandler}>
             <View style={styles.loginButton}>
               <Text style={styles.loginText}>LOGIN</Text>
+              <a href="ForgotPassword.js">Forgot Password</a>
             </View>
           </TouchableOpacity>
         </View>
-
-        {/* <View>
-      {people.map((item) => {
-        return (
-          <View key={item.key}>
-            <Text style={styles.item}>{item.name}</Text>
-          </View>
-        );
-      })}
-    </View> */}
+        <View style={{    alignItems: "center",}}>
+        <View
+          style={{
+            paddingTop: 15,
+            flexDirection: "row",
+          }}
+        >
+          <Text style={styles.inputText}>New Customer?</Text>
+          <TouchableOpacity>
+            <Text style={styles.link}>Register</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity>
+            <Text style={styles.link}>Forgot Password</Text>
+          </TouchableOpacity>
+        </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -149,7 +189,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#0F0F0F",
     alignItems: "center",
     paddingTop: 60,
-    // justifyContent: "center",
+    justifyContent: "center",
   },
   buttonContainer: {
     marginTop: 20,
@@ -188,4 +228,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginHorizontal: 10,
   },
+  link: {
+    marginTop: 10,
+    color: "#F96D02",
+  },
 });
+{/* <View>
+      {people.map((item) => {
+        return (
+          <View key={item.key}>
+            <Text style={styles.item}>{item.name}</Text>
+          </View>
+        );
+      })}
+    </View> */}
