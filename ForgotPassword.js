@@ -1,134 +1,164 @@
-// import React, {Component} from 'react';
-// import {
-//   Text,
-//   View,
-//   Pressable,
-//   StyleSheet,
-//   TextInput,
-//   KeyboardAvoidingView,
-// } from 'react-native';
-// // import Fonts from '../common/assets/fonts';
-// // import SvgIcon from '../common/assets/images/SvgIcon';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button,
+  TextInput,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
+// import Header from "./components/header";
+// import TodoItem from "./components/todoItem";
+// import AddTodo from "./components/addTodo";
+// import Sandbox from "./components/sandbox";
 
-// export default class ForgotPasswordScreen extends Component {
-//   render() {
-//     return (
-//       <KeyboardAvoidingView behavior="position" style={styles.mainCon}>
-//         <View style={{padding: 20}}>
-//           <Pressable onPress={() => this.props.navigation.goBack(null)}>
-//             <SvgIcon icon={'back'} width={30} height={30} />
-//           </Pressable>
-//         </View>
-//         <View style={{position: 'relative', bottom: 30}}>
-//           <View style={styles.loginIcon}>
-//             <SvgIcon icon={'forgot'} width={320} height={320} />
-//           </View>
-//           <View style={styles.container}>
-//             <View style={styles.loginLblCon}>
-//               <Text style={styles.loginLbl}>Forgot Password?</Text>
-//             </View>
-//             <View style={styles.forgotDes}>
-//               <Text style={styles.forgotDesLbl}>
-//                 Don't worry! It happens, please enter the address associated
-//                 with your account
-//               </Text>
-//             </View>
-//             <View style={styles.formCon}>
-//               <View style={styles.textBoxCon}>
-//                 <View style={styles.at}>
-//                   <SvgIcon icon={'at'} width={20} height={20} />
-//                 </View>
-//                 <View style={styles.textCon}>
-//                   <TextInput
-//                     style={styles.textInput}
-//                     placeholder={'Email ID'}
-//                     placeholderTextColor={'#aaa'}
-//                   />
-//                 </View>
-//               </View>
-//             </View>
+export default function App() {
+  const [emailx, setEmail] = useState("");
 
-//             <View style={[styles.loginCon, {marginTop: 40}]}>
-//               <Pressable
-//                 style={styles.LoginBtn}
-//                 onPress={() => this.props.navigation.navigate('EnterOTP')}>
-//                 <Text style={styles.loginBtnLbl}>Submit</Text>
-//               </Pressable>
-//             </View>
-//           </View>
-//         </View>
-//       </KeyboardAvoidingView>
-//     );
-//   }
-// }
+  const handlePress = () => {
+    const raw = JSON.stringify({
+      email: emailx,
+    });
+    const myHeaders = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+    };
+    fetch("http://localhost:7000/users/forgotPassword", requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-// const styles = StyleSheet.create({
-//   mainCon: {
-//     backgroundColor: '#fff',
-//     flex: 1,
-//   },
-//   loginIcon: {
-//     alignSelf: 'center',
-//   },
-//   formCon: {
-//     flexDirection: 'column',
-//     justifyContent: 'space-around',
-//   },
-//   container: {
-//     paddingHorizontal: 20,
-//   },
-//   loginLblCon: {
-//     position: 'relative',
-//     bottom: 40,
-//   },
-//   loginLbl: {
-//     color: '#000',
-//     fontSize: 40,
-//     fontFamily: Fonts.type.NotoSansExtraBold,
-//   },
-//   at: {
-//     alignSelf: 'center',
-//     width: '10%',
-//   },
+  const clickHandler = () => {
+    if (emailx.length === 0 || emailx === "") {
+      Alert.alert("Damm", "You can't fuckin leave this place empty dude!!");
+    } else {
+      handlePress();
+    }
+  };
 
-//   textBoxCon: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//   },
-//   textCon: {
-//     width: '90%',
-//   },
+  return (
+    // <Sandbox />
+    <View style={styles.container}>
+      <ScrollView>
+        <View>
+          <Image source={require("./images/house_of_tara_logo.png")} />
+        </View>
+        <View style={{ borderRadius: 5 }}>
+          <Text
+            style={{
+              fontSize: 40,
+              fontWeight: "900",
+              color: "#ffffff",
+              paddingHorizontal: 0,
+              paddingTop: 40,
+              fontFamily: "serif",
+              width: 300,
+            }}
+          >
+            FORGOT PASSWORD?.....NO WORRIES WE GOT YOU COVERED
+          </Text>
+        </View>
+        <Text style={{ color: "#ffffff" }}>
+          Enter the email attached to your account
+        </Text>
+        <View style={{ paddingTop: 40 }}>
+          <Text style={styles.inputText}>Email:</Text>
+          <TextInput
+            keyboardType="default"
+            placeholder="EmailID"
+            value={usernamex}
+            onChangeText={(value) => setEmail(value)}
+            style={styles.input}
+            placeholderTextColor={"#777"}
+          />
 
-//   textInput: {
-//     borderBottomColor: '#aaa',
-//     borderWidth: 1,
-//     borderTopWidth: 0,
-//     borderLeftWidth: 0,
-//     borderRightWidth: 0,
-//     color: '#000',
-//     fontSize: 16,
-//     fontFamily: Fonts.type.NotoSansMedium,
-//     height: 40,
-//   },
+          <TouchableOpacity onPress={clickHandler}>
+            <View style={styles.submitButton}>
+              <Text style={styles.submitText}>SUBMIT</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-//   LoginBtn: {
-//     backgroundColor: '#0057ff',
-//     borderRadius: 20,
-//   },
-//   loginBtnLbl: {
-//     textAlign: 'center',
-//     fontSize: 16,
-//     fontFamily: Fonts.type.NotoSansBlack,
-//     color: '#fff',
-//     paddingVertical: 10,
-//   },
+        {/* <View>
+      {people.map((item) => {
+        return (
+          <View key={item.key}>
+            <Text style={styles.item}>{item.name}</Text>
+          </View>
+        );
+      })}
+    </View> */}
+      </ScrollView>
+    </View>
+  );
+}
 
-//   forgotDes: {
-//     position: 'relative',
-//     bottom: 35,
-//   },
-//   forgotDesLbl: {
-//     color: '#000',
-//     fontFamily: Fonts.type.NotoSansRegular,
-//   },
-// });
+const styles = StyleSheet.create({
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: "#0F0F0F",
+  // },
+  // content: {
+  //   padding: 40,
+  // },
+  // list: { marginTop: 20 },
+  container: {
+    flex: 1,
+    backgroundColor: "#0F0F0F",
+    alignItems: "center",
+    paddingTop: 60,
+    // justifyContent: "center",
+  },
+  buttonContainer: {
+    marginTop: 20,
+    padding: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#777",
+    padding: 8,
+    margin: 5,
+    width: 300,
+    color: "#fff",
+    paddingHorizontal: 20,
+    borderRadius: 50,
+  },
+  submitButton: {
+    padding: 15,
+    marginTop: 30,
+    backgroundColor: "#F96D02",
+    marginHorizontal: 10,
+    borderRadius: 50,
+  },
+  submitText: {
+    textAlign: "center",
+    color: "#fff",
+  },
+  inputText: {
+    marginTop: 10,
+    alignSelf: "center",
+    color: "#fff",
+  },
+  item: {
+    padding: 30,
+    marginTop: 24,
+    backgroundColor: "#F96D02",
+    fontSize: 24,
+    marginHorizontal: 10,
+  },
+});
+z;

@@ -148,6 +148,7 @@ export default function App() {
           <TouchableOpacity onPress={clickHandler}>
             <View style={styles.loginButton}>
               <Text style={styles.loginText}>LOGIN</Text>
+              <a href="ForgotPassword.js">Forgot Password</a>
             </View>
           </TouchableOpacity>
         </View>
