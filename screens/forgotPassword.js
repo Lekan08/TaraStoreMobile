@@ -17,7 +17,8 @@ import {
 // import TodoItem from "./components/todoItem";
 // import AddTodo from "./components/addTodo";
 // import Sandbox from "./components/sandbox";
-export default function App() {
+
+export default function ForgotPassword({ navigation }) {
   const [emailx, setEmail] = useState("");
 
   const handlePress = () => {
@@ -54,7 +55,7 @@ export default function App() {
     <View style={styles.container}>
       <ScrollView>
         <View>
-          <Image source={require("./images/house_of_tara_logo.png")} />
+          <Image source={require("../images/house_of_tara_logo.png")} />
         </View>
         <View style={{ borderRadius: 5 }}>
           <Text
@@ -78,8 +79,8 @@ export default function App() {
           <Text style={styles.inputText}>Email:</Text>
           <TextInput
             keyboardType="default"
-            placeholder="EmailID"
-            value={usernamex}
+            placeholder="Email"
+            value={emailx}
             onChangeText={(value) => setEmail(value)}
             style={styles.input}
             placeholderTextColor={"#777"}
@@ -160,4 +161,3 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
 });
-z;
