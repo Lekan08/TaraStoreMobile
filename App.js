@@ -39,6 +39,7 @@ export default function App() {
       headers: myHeaders,
       body: raw,
     });
+
     // const raw = JSON.stringify({
     //   username: usernamex,
     //   password: passwordx,
@@ -114,9 +115,11 @@ export default function App() {
             Let’s Help You Find Your Match
           </Text>
         </View>
-        <Text style={{ color: "#ffffff" }}>
+        <View>
+          {/* <Text style={{ color: "#ffffff" }}>
           Meeting the perfect one shouldn’t be a hassle.
-        </Text>
+        </Text> */}
+        </View>
         <View style={{ paddingTop: 40 }}>
           <Text style={styles.inputText}>Username:</Text>
           <TextInput
@@ -148,27 +151,26 @@ export default function App() {
           <TouchableOpacity onPress={clickHandler}>
             <View style={styles.loginButton}>
               <Text style={styles.loginText}>LOGIN</Text>
-              <a href="ForgotPassword.js">Forgot Password</a>
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{    alignItems: "center",}}>
-        <View
-          style={{
-            paddingTop: 15,
-            flexDirection: "row",
-          }}
-        >
-          <Text style={styles.inputText}>New Customer?</Text>
-          <TouchableOpacity>
-            <Text style={styles.link}>Register</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity>
-            <Text style={styles.link}>Forgot Password</Text>
-          </TouchableOpacity>
-        </View>
+        <View style={{ alignItems: "center" }}>
+          <View
+            style={{
+              paddingTop: 15,
+              flexDirection: "row",
+            }}
+          >
+            <Text style={styles.inputText}>New Customer?</Text>
+            <TouchableOpacity>
+              <Text style={styles.link}>Register</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity>
+              <Text style={styles.link}>Forgot Password</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -233,7 +235,8 @@ const styles = StyleSheet.create({
     color: "#F96D02",
   },
 });
-{/* <View>
+{
+  /* <View>
       {people.map((item) => {
         return (
           <View key={item.key}>
@@ -241,4 +244,5 @@ const styles = StyleSheet.create({
           </View>
         );
       })}
-    </View> */}
+    </View> */
+}
