@@ -98,7 +98,7 @@ export default function ForgotPassword({ navigation }) {
 
           <TouchableOpacity onPress={clickHandler}>
             <View style={styles.submitButton}>
-              <Text style={styles.submitText}>SUBMIT</Text>
+              <Text style={styles.submitText}>SEND INSTRUCTIONS</Text>
             </View>
           </TouchableOpacity>
         </View>

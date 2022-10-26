@@ -4,6 +4,7 @@ import Registration from "../screens/registration";
 import Login from "../screens/login";
 import ForgotPassword from "../screens/forgotPassword";
 import Home from "../screens/home";
+import Welcome from "../screens/welcome";
 
 const Stack = createStackNavigator();
 
@@ -11,12 +12,20 @@ function NavigationStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Welcome"
         screenOptions={{
           headerTintColor: "white",
           headerStyle: { backgroundColor: "#F96D02", height: 60 },
         }}
       >
+      <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{
+            title: "Welcome",
+            //   headerStyle: { backgroundColor: "tomato" },
+          }}
+        />
         <Stack.Screen
           name="Login"
           component={Login}
