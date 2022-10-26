@@ -21,7 +21,6 @@ import {
 export default function Login({ navigation }) {
   const [usernamex, setUsername] = useState("");
   const [passwordx, setPassword] = useState("");
-  const [rPasswordx, setRPassword] = useState("");
 
   const handlePress = () => {
     const raw = JSON.stringify({
@@ -65,9 +64,7 @@ export default function Login({ navigation }) {
       usernamex.length === 0 ||
       usernamex === "" ||
       passwordx.length === 0 ||
-      passwordx === "" ||
-      rPasswordx.length === 0 ||
-      rPasswordx === ""
+      passwordx === "" 
     ) {
       Alert.alert("Damm", "You can't fuckin leave this place empty dude!!");
     } else {
@@ -136,15 +133,8 @@ export default function Login({ navigation }) {
             secureTextEntry={true}
             placeholderTextColor={"#777"}
           />
-          <Text style={styles.inputText}>Confirm Password:</Text>
-          <TextInput
-            placeholder="Confirm Password"
-            value={rPasswordx}
-            onChangeText={(value) => setRPassword(value)}
-            style={styles.input}
-            secureTextEntry={true}
-            placeholderTextColor={"#777"}
-          />
+          {/* <TextInput label={passwordx} right={ <TextInput.Icon color="grey" name={'eye'} />} /> */}
+        
           <TouchableOpacity onPress={clickHandler}>
             <View style={styles.loginButton}>
               <Text style={styles.loginText}>LOGIN</Text>
