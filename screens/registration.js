@@ -13,18 +13,29 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import AllCountriesAndStates from "../countries-states-master/countries";
 // import Header from "./components/header";
 // import TodoItem from "./components/todoItem";
 // import AddTodo from "./components/addTodo";
 // import Sandbox from "./components/sandbox";
 // import {Ionicons} from '@ex'
 export default function Registration({ navigation }) {
+  const [firstnamex, setFirstname] = useState("");
+  const [lastnamex, setLastname] = useState("");
+  const [emailx, setEmail] = useState("");
   const [usernamex, setUsername] = useState("");
   const [passwordx, setPassword] = useState("");
   const [rPasswordx, setRPassword] = useState("");
+  const [countryx, setCountryx] = useState("");
+
+  const { countriesAndStates: AlCountry } = AllCountriesAndStates();
 
   const handlePress = () => {
     const raw = JSON.stringify({
+      firstname: firstnamex,
+      lastname: lastnamex,
+      email: emailx,
       username: usernamex,
       password: passwordx,
     });
@@ -34,8 +45,8 @@ export default function Registration({ navigation }) {
     };
 
     const url = "https://tarastoreservice.plutospace.space";
-    fetch(url + "http://users/doLogin", {
-      method: "GET",
+    fetch(url + "http://users/add", {
+      method: "POST",
       headers: myHeaders,
       body: raw,
     });
@@ -62,6 +73,12 @@ export default function Registration({ navigation }) {
 
   const clickHandler = () => {
     if (
+      firstnamex.length === 0 ||
+      firstnamex === "" ||
+      lastnamex.length === 0 ||
+      lastnamex === "" ||
+      emailx.length === 0 ||
+      emailx === "" ||
       usernamex.length === 0 ||
       usernamex === "" ||
       passwordx.length === 0 ||
@@ -118,6 +135,33 @@ export default function Registration({ navigation }) {
           Meeting the perfect one shouldn’t be a hassle.
         </Text>
         <View style={{ paddingTop: 40 }}>
+          <Text style={styles.inputText}>First Name:</Text>
+          <TextInput
+            keyboardType="default"
+            placeholder="First Name"
+            value={firstnamex}
+            onChangeText={(value) => setFirstname(value)}
+            style={styles.input}
+            placeholderTextColor={"#777"}
+          />
+          <Text style={styles.inputText}>Last Name:</Text>
+          <TextInput
+            keyboardType="default"
+            placeholder="Last Name"
+            value={lastnamex}
+            onChangeText={(value) => setLastname(value)}
+            style={styles.input}
+            placeholderTextColor={"#777"}
+          />
+          <Text style={styles.inputText}>Email:</Text>
+          <TextInput
+            keyboardType="default"
+            placeholder="Email"
+            value={emailx}
+            onChangeText={(value) => setEmail(value)}
+            style={styles.input}
+            placeholderTextColor={"#777"}
+          />
           <Text style={styles.inputText}>Username:</Text>
           <TextInput
             keyboardType="default"
@@ -127,6 +171,30 @@ export default function Registration({ navigation }) {
             style={styles.input}
             placeholderTextColor={"#777"}
           />
+
+          {/* <select
+                    value={countryx || ""}
+                    aria-label="Default select example"
+                    onChange={(e) => setCountryx(e.target.value, timeZonex)}
+                  >
+                    <option>--Select Timezone--</option>
+                    {AlCountry.map((apic) => (
+                      <option key={apic.code3} value={apic.name}>
+                        {apic.name}
+                      </option>
+                    ))}
+                  </select> */}
+          <Picker
+            style={{ color: "#ffffff" }}
+            selectedValue={countryx}
+            onValueChange={(e) => setCountryx(e.target.value)}
+          >
+            <Picker.Item label="Select Country" value="" />
+            {AlCountry.map((apic) => (
+              <Picker.Item label={apic.name} value={apic.code3} />
+            ))}
+          </Picker>
+
           <Text style={styles.inputText}>Password:</Text>
           <TextInput
             placeholder="Password"

@@ -53,7 +53,7 @@ export default function App() {
       <NavigationStack />
     </View>
   );
-}
+  }
 
 const styles = StyleSheet.create({
   container: {
