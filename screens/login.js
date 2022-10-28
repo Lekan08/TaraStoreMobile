@@ -12,7 +12,8 @@ import {
   Alert,
   TouchableWithoutFeedback,
   Keyboard,
-} from "react-native";// import Header from "./components/header";
+} from "react-native";
+// import Header from "./components/header";
 // import TodoItem from "./components/todoItem";
 // import AddTodo from "./components/addTodo";
 // import Sandbox from "./components/sandbox";
@@ -20,7 +21,6 @@ import {
 export default function Login({ navigation }) {
   const [usernamex, setUsername] = useState("");
   const [passwordx, setPassword] = useState("");
-  const [rPasswordx, setRPassword] = useState("");
 
   const handlePress = () => {
     const raw = JSON.stringify({
@@ -60,13 +60,12 @@ export default function Login({ navigation }) {
   };
 
   const clickHandler = () => {
+    navigation.navigate("Home");
     if (
       usernamex.length === 0 ||
       usernamex === "" ||
       passwordx.length === 0 ||
-      passwordx === "" ||
-      rPasswordx.length === 0 ||
-      rPasswordx === ""
+      passwordx === "" 
     ) {
       Alert.alert("Damm", "You can't fuckin leave this place empty dude!!");
     } else {
@@ -125,7 +124,6 @@ export default function Login({ navigation }) {
             onChangeText={(value) => setUsername(value)}
             style={styles.input}
             placeholderTextColor={"#777"}
-            iconName="email-outline"
           />
           <Text style={styles.inputText}>Password:</Text>
           <TextInput
@@ -136,8 +134,8 @@ export default function Login({ navigation }) {
             secureTextEntry={true}
             placeholderTextColor={"#777"}
           />
-          
-         
+          {/* <TextInput label={passwordx} right={ <TextInput.Icon color="grey" name={'eye'} />} /> */}
+        
           <TouchableOpacity onPress={clickHandler}>
             <View style={styles.loginButton}>
               <Text style={styles.loginText}>LOGIN</Text>

@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import Registration from "../screens/registration";
 import Login from "../screens/login";
 import ForgotPassword from "../screens/forgotPassword";
+// import Home from "../screens/home";
+import BottomTabs from "./bottomNavigation";
 import Home from "../screens/home";
 import Welcome from "../screens/welcome";
 
@@ -15,10 +17,10 @@ function NavigationStack() {
         initialRouteName="Welcome"
         screenOptions={{
           headerTintColor: "white",
-          headerStyle: { backgroundColor: "#F96D02", height: 60 },
+          headerStyle: { backgroundColor: "#F96D02", height: 80 },
         }}
       >
-      <Stack.Screen
+        <Stack.Screen
           name="Welcome"
           component={Welcome}
           options={{
@@ -30,6 +32,7 @@ function NavigationStack() {
           name="Login"
           component={Login}
           options={{
+            headerShown: false,
             title: "Login",
             //   headerStyle: { backgroundColor: "tomato" },
           }}
@@ -44,9 +47,10 @@ function NavigationStack() {
         />
         <Stack.Screen
           name="Home"
-          component={Home}
+          component={BottomTabs}
           options={{
-            title: "Dashboard",
+            title: "Home",
+            headerShown: false,
             //   headerStyle: { backgroundColor: "tomato" },
           }}
         />
