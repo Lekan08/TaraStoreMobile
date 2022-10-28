@@ -28,16 +28,32 @@ export default function Login({ navigation }) {
       password: passwordx,
     });
     const myHeaders = {
-      Accept: "application/json",
+      "Accept": "application/json",
       "Content-Type": "application/json",
     };
-
-    const url = "https://tarastoreservice.plutospace.space";
-    fetch(url + "http://users/doLogin", {
-      method: "GET",
+    const requestOptions = {
+      method: "POST",
       headers: myHeaders,
       body: raw,
-    });
+      redirect: "follow",
+    };
+
+
+    const url = "https://tarastoreservice.plutospace.space";
+
+    fetch(`${url}/users/doLogin`, requestOptions)
+        .then((res) => res.json())
+        .then((result) => {
+          if (result.status === "SUCCESS") {
+            navigation.navigate("Profile", { replace: true })
+              //navigate("/authentication/company-Registration", { replace: true });
+          } else {
+            Alert.alert(result.status, result.message);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     // const raw = JSON.stringify({
     //   username: usernamex,
     //   password: passwordx,
@@ -60,7 +76,7 @@ export default function Login({ navigation }) {
   };
 
   const clickHandler = () => {
-    navigation.navigate("Home");
+    // navigation.navigate("Home");
     if (
       usernamex.length === 0 ||
       usernamex === "" ||
@@ -151,7 +167,7 @@ export default function Login({ navigation }) {
           >
             <Text style={styles.inputText}>Don't have an account? </Text>
             <TouchableOpacity
-              onPress={() => navigation.navigate("Registration")}
+              onPress={() => navigation.navigate("Welcome")}
             >
               <Text style={styles.link}>Register</Text>
             </TouchableOpacity>

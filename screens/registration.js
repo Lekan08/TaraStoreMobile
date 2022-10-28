@@ -37,14 +37,16 @@ export default function Registration({ navigation }) {
   const [residentialStatex, setResidentialState] = useState("");
   const [residentialCountryx, setResidentialCountry] = useState("");
 
-  const handleOnChangeRCCountry = (e) => {
-    const filteredItems = AlCountry.filter((item) => item.name === e.target.value);
+  const handleOnChangeRCCountry = (valuex) => {
+    console.log(valuex);
+    const filteredItems = AlCountry.filter((item) => item.name === valuex);
+    console.log(filteredItems);
     setAllStates(filteredItems[0].states);
-    setResidentialCountry(e.target.value);
+    setResidentialCountry(valuex);
   };
 
-  const handleOnChangeRCState = (e) => {
-    setResidentialState(e.target.value);
+  const handleOnChangeRCState = (valuex) => {
+    setResidentialState(valuex);
   };
 
   // const handleOnChangeNationality = (e) => {
@@ -202,7 +204,7 @@ export default function Registration({ navigation }) {
           <Picker
             style={{ color: "#ffffff" }}
             selectedValue={residentialCountryx}
-            onValueChange={(e)=>handleOnChangeRCCountry(e)}
+            onValueChange= {(newValue) => handleOnChangeRCCountry(newValue)}
           >
             <Picker.Item label="Select Country" value="" />
             {AlCountry.map((apic) => (
@@ -216,9 +218,10 @@ export default function Registration({ navigation }) {
           <Picker
             style={{ color: "#ffffff" }}
             selectedValue={ residentialStatex}
-            onValueChange={handleOnChangeRCState}
+            onValueChange= {(newValue) => handleOnChangeRCState(newValue)}
+
           >
-            <Picker.Item label="State" value="" />
+            <Picker.Item label=" Select State" value="" />
             {allStates.map((apic) => (
               <Picker.Item
                 label={apic.name}

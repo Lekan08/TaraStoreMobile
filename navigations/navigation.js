@@ -7,36 +7,41 @@ import ForgotPassword from "../screens/forgotPassword";
 import BottomTabs from "./bottomNavigation";
 import Home from "../screens/home";
 import Welcome from "../screens/welcome";
+import Profile from "../screens/profile";
+import { ColorSpace } from "react-native-reanimated";
 
 const Stack = createStackNavigator();
 
 function NavigationStack() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={{ colors:{ background: "#0f0f0f"} }}>
       <Stack.Navigator
-        initialRouteName="Welcome"
+        initialRouteName="Login"
         screenOptions={{
           headerTintColor: "white",
-          headerStyle: { backgroundColor: "#F96D02", height: 80 },
+          headerStyle: { backgroundColor: "#0F0F0F", height: 80 },
         }}
       >
+       <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerShown: false,
+            headerTintColor: "white",
+            title: "Login",
+            //   headerStyle: { backgroundColor: "tomato" },
+          }}
+        />
         <Stack.Screen
           name="Welcome"
           component={Welcome}
           options={{
             title: "Welcome",
+            headerTintColor: "white",
             //   headerStyle: { backgroundColor: "tomato" },
           }}
         />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{
-            headerShown: false,
-            title: "Login",
-            //   headerStyle: { backgroundColor: "tomato" },
-          }}
-        />
+       
         <Stack.Screen
           name="Registration"
           component={Registration}
@@ -58,6 +63,11 @@ function NavigationStack() {
           name="ForgotPassword"
           component={ForgotPassword}
           options={{ title: "Forgot Password" }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{ title: "Profile" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
