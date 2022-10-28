@@ -1,3 +1,4 @@
+import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -17,6 +18,7 @@ export default function Welcome({ navigation }) {
   
   return (
     <View style={styles.container}>
+    <StatusBar></StatusBar>
       <ScrollView>
       <View>
           <Image source={require("../images/house_of_tara_logo.png")} />
@@ -28,29 +30,37 @@ export default function Welcome({ navigation }) {
               fontWeight: "900",
               color: "#ffffff",
               paddingHorizontal: 0,
-              paddingTop: 40,
+              paddingTop: 20,
               fontFamily: "serif",
               width: 300,
             }}
           >
-            Let’s Help You Find Your Match
+            Let's Help You Find Your Match
           </Text>
         </View>
-        <Text style={{ color: "#ffffff" }}>
+        <Text style={{ color: "#ffffff",
+          fontSize: 20,
+              fontWeight: "100",
+              color: "#ffffff",
+              paddingHorizontal: 0,
+              paddingTop: 10,
+              fontFamily: "serif",
+              width: 300,
+         }}>
           Meeting the perfect one shouldn’t be a hassle.
         </Text>
       <View>
-        <TouchableOpacity style={{ width: 300 }} onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity style={{ width: 300, paddingTop: 10,  }} onPress={() => navigation.navigate("Login")}>
           <View style={styles.loginButton}>
             <Text style={styles.loginText}>Retailer</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{ width: 300 }} onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity style={{ width: 300, paddingTop: 10, }} onPress={() => navigation.navigate("Login")}>
           <View style={styles.loginButton}>
             <Text style={styles.loginText}>Wholesaler</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{ width: 300 }} onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity style={{ width: 300, paddingTop: 10, }} onPress={() => navigation.navigate("Login")}>
           <View style={styles.loginButton}>
             <Text style={styles.loginText}>Both</Text>
           </View>
