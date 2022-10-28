@@ -60,6 +60,7 @@ export default function Login({ navigation }) {
   };
 
   const clickHandler = () => {
+    navigation.navigate("Home");
     if (
       usernamex.length === 0 ||
       usernamex === "" ||
