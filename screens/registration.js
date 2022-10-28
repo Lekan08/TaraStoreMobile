@@ -107,7 +107,6 @@ export default function Registration({ navigation }) {
               color: "#ffffff",
               paddingHorizontal: 0,
               paddingTop: 40,
-              fontFamily: "serif",
               width: 300,
             }}
           >

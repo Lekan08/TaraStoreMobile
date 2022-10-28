@@ -65,7 +65,7 @@ export default function ForgotPassword({ navigation }) {
               color: "#ffffff",
               paddingHorizontal: 0,
               paddingTop: 40,
-              fontFamily: "serif",
+              // fontFamily: "serif",
               width: 300,
             }}
           >
