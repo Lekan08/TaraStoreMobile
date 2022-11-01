@@ -9,23 +9,60 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  Form,
   Alert,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import AllCountriesAndStates from "../countries-states-master/countries";
 // import Header from "./components/header";
 // import TodoItem from "./components/todoItem";
 // import AddTodo from "./components/addTodo";
 // import Sandbox from "./components/sandbox";
 // import {Ionicons} from '@ex'
 export default function Registration({ navigation }) {
+  const [firstnamex, setFirstname] = useState("");
+  const [lastnamex, setLastname] = useState("");
+  const [emailx, setEmail] = useState("");
   const [usernamex, setUsername] = useState("");
+  const [cityx, setCity] = useState("");
+  const [addressx, setAddress] = useState("");
   const [passwordx, setPassword] = useState("");
   const [rPasswordx, setRPassword] = useState("");
+  // const [countryx, setCountryx] = useState("");
+
+  const { countriesAndStates: AlCountry } = AllCountriesAndStates();
+  const [allStates, setAllStates] = useState([]);
+  const [residentialStatex, setResidentialState] = useState("");
+  const [residentialCountryx, setResidentialCountry] = useState("");
+
+  const handleOnChangeRCCountry = (valuex) => {
+    console.log(valuex);
+    const filteredItems = AlCountry.filter((item) => item.name === valuex);
+    console.log(filteredItems);
+    setAllStates(filteredItems[0].states);
+    setResidentialCountry(valuex);
+  };
+
+  const handleOnChangeRCState = (valuex) => {
+    setResidentialState(valuex);
+  };
+
+  // const handleOnChangeNationality = (e) => {
+  //   setNationality(e.target.value);
+  // };
 
   const handlePress = () => {
     const raw = JSON.stringify({
+      firstname: firstnamex,
+      lastname: lastnamex,
+      email: emailx,
       username: usernamex,
+      country:residentialCountryx,
+      state:residentialStatex,
+      city:cityx,
+      address:addressx,
       password: passwordx,
     });
     const myHeaders = {
@@ -34,8 +71,8 @@ export default function Registration({ navigation }) {
     };
 
     const url = "https://tarastoreservice.plutospace.space";
-    fetch(url + "http://users/doLogin", {
-      method: "GET",
+    fetch(url + "http://users/add", {
+      method: "POST",
       headers: myHeaders,
       body: raw,
     });
@@ -62,8 +99,18 @@ export default function Registration({ navigation }) {
 
   const clickHandler = () => {
     if (
+      firstnamex.length === 0 ||
+      firstnamex === "" ||
+      lastnamex.length === 0 ||
+      lastnamex === "" ||
+      emailx.length === 0 ||
+      emailx === "" ||
       usernamex.length === 0 ||
       usernamex === "" ||
+      cityx.length === 0 ||
+      cityx === "" ||
+      addressx.length === 0 ||
+      addressx === "" ||
       passwordx.length === 0 ||
       passwordx === "" ||
       rPasswordx.length === 0 ||
@@ -114,15 +161,89 @@ export default function Registration({ navigation }) {
           </Text>
         </View>
         <Text style={{ color: "#ffffff" }}>
-          Meeting the perfect one shouldn’t be a hassle.
+          Meeting the perfect one shouldn't be a hassle.
         </Text>
         <View style={{ paddingTop: 40 }}>
+          <Text style={styles.inputText}>First Name:</Text>
+          <TextInput
+            keyboardType="default"
+            placeholder="First Name"
+            value={firstnamex}
+            onChangeText={(value) => setFirstname(value)}
+            style={styles.input}
+            placeholderTextColor={"#777"}
+          />
+          <Text style={styles.inputText}>Last Name:</Text>
+          <TextInput
+            keyboardType="default"
+            placeholder="Last Name"
+            value={lastnamex}
+            onChangeText={(value) => setLastname(value)}
+            style={styles.input}
+            placeholderTextColor={"#777"}
+          />
+          <Text style={styles.inputText}>Email:</Text>
+          <TextInput
+            keyboardType="default"
+            placeholder="Email"
+            value={emailx}
+            onChangeText={(value) => setEmail(value)}
+            style={styles.input}
+            placeholderTextColor={"#777"}
+          />
           <Text style={styles.inputText}>Username:</Text>
           <TextInput
             keyboardType="default"
             placeholder="Username"
             value={usernamex}
             onChangeText={(value) => setUsername(value)}
+            style={styles.input}
+            placeholderTextColor={"#777"}
+          />
+          <Picker
+            style={{ color: "#ffffff" }}
+            selectedValue={residentialCountryx}
+            onValueChange= {(newValue) => handleOnChangeRCCountry(newValue)}
+          >
+            <Picker.Item label="Select Country" value="" />
+            {AlCountry.map((apic) => (
+              <Picker.Item
+                label={apic.name}
+                key={apic.code3}
+                value={apic.name}
+              />
+            ))}
+          </Picker>
+          <Picker
+            style={{ color: "#ffffff" }}
+            selectedValue={ residentialStatex}
+            onValueChange= {(newValue) => handleOnChangeRCState(newValue)}
+
+          >
+            <Picker.Item label=" Select State" value="" />
+            {allStates.map((apic) => (
+              <Picker.Item
+                label={apic.name}
+                key={apic.code3}
+                value={apic.name}
+              />
+            ))}
+          </Picker>
+          <Text style={styles.inputText}>City::</Text>
+          <TextInput
+            keyboardType="default"
+            placeholder="City"
+            value={cityx}
+            onChangeText={(value) => setCity(value)}
+            style={styles.input}
+            placeholderTextColor={"#777"}
+          />
+          <Text style={styles.inputText}>House Address:</Text>
+          <TextInput
+            keyboardType="default"
+            placeholder="Address"
+            value={addressx}
+            onChangeText={(value) => setAddress(value)}
             style={styles.input}
             placeholderTextColor={"#777"}
           />
@@ -183,6 +304,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 60,
     justifyContent: "center",
+    paddingBottom:60,
   },
   buttonContainer: {
     marginTop: 20,

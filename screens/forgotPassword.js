@@ -44,7 +44,7 @@ export default function ForgotPassword({ navigation }) {
 
   const clickHandler = () => {
     if (emailx.length === 0 || emailx === "") {
-      Alert.alert("Damm", "You can't fuckin leave this place empty dude!!");
+      Alert.alert("You need to enter an Email to continue");
     } else {
       handlePress();
     }
@@ -64,19 +64,29 @@ export default function ForgotPassword({ navigation }) {
               fontWeight: "900",
               color: "#ffffff",
               paddingHorizontal: 0,
-              paddingTop: 40,
-              // fontFamily: "serif",
+              paddingTop: 30,
+              fontFamily: "serif",
               width: 300,
             }}
           >
-            FORGOT PASSWORD?.....NO WORRIES WE GOT YOU COVERED
+            FORGOTTEN YOUR PASSWORD?
           </Text>
         </View>
-        <Text style={{ color: "#ffffff" }}>
-          Enter the email attached to your account
+        <Text 
+        style={{ 
+          color: "#ffffff" ,
+          fontSize: 20,
+              fontWeight: "50",
+              paddingHorizontal: 0,
+              paddingTop: 10,
+              fontFamily: "serif",
+              width: 200,
+          }}
+          >
+          Enter the email attached to your account to reset your password.
         </Text>
         <View style={{ paddingTop: 40 }}>
-          <Text style={styles.inputText}>Email:</Text>
+          <Text style={styles.inputText}></Text>
           <TextInput
             keyboardType="default"
             placeholder="Email"
