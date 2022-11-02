@@ -15,6 +15,7 @@ import {
   Keyboard,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+// import SelectList from 'react-native-dropdown-select-list'
 import AllCountriesAndStates from "../countries-states-master/countries";
 // import Header from "./components/header";
 // import TodoItem from "./components/todoItem";
@@ -33,18 +34,25 @@ export default function Registration({ navigation }) {
   // const [countryx, setCountryx] = useState("");
 
   const { countriesAndStates: AlCountry } = AllCountriesAndStates();
+
+  
+  const data = AlCountry.map((data) => {
+    return {key:data.code3, value:data.name}
+  });
   const [allStates, setAllStates] = useState([]);
   const [residentialStatex, setResidentialState] = useState("");
   const [residentialCountryx, setResidentialCountry] = useState("");
 
-  const handleOnChangeRCCountry = (e) => {
-    const filteredItems = AlCountry.filter((item) => item.name === e.target.value);
+  const handleOnChangeRCCountry = (valuex) => {
+    console.log(valuex);
+    const filteredItems = AlCountry.filter((item) => item.name === valuex);
+    console.log(filteredItems);
     setAllStates(filteredItems[0].states);
-    setResidentialCountry(e.target.value);
+    setResidentialCountry(valuex);
   };
 
-  const handleOnChangeRCState = (e) => {
-    setResidentialState(e.target.value);
+  const handleOnChangeRCState = (valuex) => {
+    setResidentialState(valuex);
   };
 
   // const handleOnChangeNationality = (e) => {
@@ -72,8 +80,22 @@ export default function Registration({ navigation }) {
     fetch(url + "http://users/add", {
       method: "POST",
       headers: myHeaders,
-      body: raw,
-    });
+      body:   raw,
+    })
+     .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      Alert.alert(data.status, data.message, [{text: "Continue", onPress:() => {
+        navigation.navigate("Home")
+      } }]);
+      })
+    .catch((err) => {
+      
+      Alert.alert(err.status, err.message);
+      console.log(err);
+     });
+
+
     // const raw = JSON.stringify({
     //   username: usernamex,
     //   password: passwordx,
@@ -199,10 +221,14 @@ export default function Registration({ navigation }) {
             style={styles.input}
             placeholderTextColor={"#777"}
           />
+
+    {/* <SelectList setSelected={setResidentialCountry} data={data} onSelect={() => handleOnChangeRCCountry(residentialCountryx)} dropdownStyles={{color:"#fff"}} /> */}
+
           <Picker
             style={{ color: "#ffffff" }}
             selectedValue={residentialCountryx}
-            onValueChange={(e)=>handleOnChangeRCCountry(e)}
+            onValueChange= {(newValue) => handleOnChangeRCCountry(newValue)}
+            placeholder="Select Country"
           >
             <Picker.Item label="Select Country" value="" />
             {AlCountry.map((apic) => (
@@ -216,9 +242,10 @@ export default function Registration({ navigation }) {
           <Picker
             style={{ color: "#ffffff" }}
             selectedValue={ residentialStatex}
-            onValueChange={handleOnChangeRCState}
+            onValueChange= {(newValue) => handleOnChangeRCState(newValue)}
+
           >
-            <Picker.Item label="State" value="" />
+            <Picker.Item label=" Select State" value="" />
             {allStates.map((apic) => (
               <Picker.Item
                 label={apic.name}

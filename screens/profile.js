@@ -13,6 +13,7 @@ export default function Profile({ navigation }) {
   return (
     <View style={globalStyles.container}>
       <Text style={globalStyles.titleText}>Profile Screen</Text>
+      <Button onPress={() => navigation.navigate("changePassword")} />
     </View>
   );
 }

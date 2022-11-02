@@ -35,7 +35,7 @@ export default function Welcome({ navigation }) {
               width: 300,
             }}
           >
-            Let's Help You Find Your Match
+            Let Know What You Are Signing Up For 
           </Text>
         </View>
         <Text style={{ color: "#ffffff",
@@ -47,20 +47,20 @@ export default function Welcome({ navigation }) {
               fontFamily: "serif",
               width: 300,
          }}>
-          Meeting the perfect one shouldn’t be a hassle.
+        What Repository are you signing up for ?
         </Text>
       <View>
-        <TouchableOpacity style={{ width: 300, paddingTop: 10,  }} onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity style={{ width: 300, paddingTop: 10,  }} onPress={() => navigation.navigate("Registration")}>
           <View style={styles.loginButton}>
             <Text style={styles.loginText}>Retailer</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{ width: 300, paddingTop: 10, }} onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity style={{ width: 300, paddingTop: 10, }} onPress={() => navigation.navigate("Registration")}>
           <View style={styles.loginButton}>
             <Text style={styles.loginText}>Wholesaler</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{ width: 300, paddingTop: 10, }} onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity style={{ width: 300, paddingTop: 10, }} onPress={() => navigation.navigate("Registration")}>
           <View style={styles.loginButton}>
             <Text style={styles.loginText}>Both</Text>
           </View>
