@@ -14,6 +14,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import SweetAlert from 'react-native-sweet-alert';
 import { Picker } from "@react-native-picker/picker";
 import AllCountriesAndStates from "../countries-states-master/countries";
 // import Header from "./components/header";
@@ -59,23 +60,41 @@ export default function Registration({ navigation }) {
       lastname: lastnamex,
       email: emailx,
       username: usernamex,
-      country:residentialCountryx,
-      state:residentialStatex,
-      city:cityx,
-      address:addressx,
+      country: residentialCountryx,
+      state: residentialStatex,
+      city: cityx,
+      address: addressx,
       password: passwordx,
     });
     const myHeaders = {
       Accept: "application/json",
       "Content-Type": "application/json",
     };
-
-    const url = "https://tarastoreservice.plutospace.space";
-    fetch(url + "http://users/add", {
+    const requestOptions = {
       method: "POST",
       headers: myHeaders,
       body: raw,
-    });
+      redirect: "follow",
+    };
+
+    const url = "https://tarastoreservice.plutospace.space";
+
+    fetch(`${url}/users/add`, requestOptions)
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if (result.status === "SUCCESS") {
+          Alert.alert(result.status, result.message);
+          navigation.navigate("Login", { replace: true });
+          //navigate("/authentication/company-Registration", { replace: true });
+        } else {
+          Alert.alert(result.status, result.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     // const raw = JSON.stringify({
     //   username: usernamex,
     //   password: passwordx,
@@ -121,6 +140,19 @@ export default function Registration({ navigation }) {
       handlePress();
     }
 
+    // SweetAlert.showAlertWithOptions({
+    //   title: result.status,
+    //   subTitle: result.message,
+    //   confirmButtonTitle: 'OK',
+    //   confirmButtonColor: '#000',
+    //   otherButtonTitle: 'Cancel',
+    //   otherButtonColor: '#dedede',
+    //   backgroundColor: "#F96D02",
+    //   style: 'success',
+    //   cancellable: true
+    // },
+    //   callback => console.log('callback'));
+    
     //fetching api
     // const raw = JSON.stringify({
     //   username: usernamex,
@@ -204,7 +236,7 @@ export default function Registration({ navigation }) {
           <Picker
             style={{ color: "#ffffff" }}
             selectedValue={residentialCountryx}
-            onValueChange= {(newValue) => handleOnChangeRCCountry(newValue)}
+            onValueChange={(newValue) => handleOnChangeRCCountry(newValue)}
           >
             <Picker.Item label="Select Country" value="" />
             {AlCountry.map((apic) => (
@@ -217,9 +249,8 @@ export default function Registration({ navigation }) {
           </Picker>
           <Picker
             style={{ color: "#ffffff" }}
-            selectedValue={ residentialStatex}
-            onValueChange= {(newValue) => handleOnChangeRCState(newValue)}
-
+            selectedValue={residentialStatex}
+            onValueChange={(newValue) => handleOnChangeRCState(newValue)}
           >
             <Picker.Item label=" Select State" value="" />
             {allStates.map((apic) => (
@@ -348,6 +379,7 @@ const styles = StyleSheet.create({
     color: "#F96D02",
   },
 });
+
 {
   /* <View>
       {people.map((item) => {

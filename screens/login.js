@@ -22,6 +22,15 @@ export default function Login({ navigation }) {
   const [usernamex, setUsername] = useState("");
   const [passwordx, setPassword] = useState("");
 
+  const [passwordShown, setPasswordShown] = useState(false);
+
+  // Password toggle handler
+  const togglePassword = () => {
+    // When the handler is invoked
+    // inverse the boolean state of passwordShown
+    setPasswordShown(!passwordShown);
+  };
+
   const handlePress = () => {
     const raw = JSON.stringify({
       username: usernamex,
@@ -45,7 +54,8 @@ export default function Login({ navigation }) {
         .then((res) => res.json())
         .then((result) => {
           if (result.status === "SUCCESS") {
-            navigation.navigate("Profile", { replace: true })
+            Alert.alert(result.status, result.message);
+            navigation.navigate("Dashboard", { replace: true })
               //navigate("/authentication/company-Registration", { replace: true });
           } else {
             Alert.alert(result.status, result.message);
@@ -134,6 +144,7 @@ export default function Login({ navigation }) {
         <View style={{ paddingTop: 40 }}>
           <Text style={styles.inputText}>Username:</Text>
           <TextInput
+           type={passwordShown ? "text" : "password"}
             keyboardType="default"
             placeholder="Username"
             value={usernamex}
@@ -141,8 +152,19 @@ export default function Login({ navigation }) {
             style={styles.input}
             placeholderTextColor={"#777"}
           />
+              <Text
+                    variant="button"
+                    fontSize="60%"
+                    align="right"
+                    onClick={togglePassword}
+                    mx={0}
+                    color="info"
+                  >
+                    show password
+                  </Text>
           <Text style={styles.inputText}>Password:</Text>
           <TextInput
+           type={passwordShown ? "text" : "password"}
             placeholder="Password"
             value={passwordx}
             onChangeText={(value) => setPassword(value)}
