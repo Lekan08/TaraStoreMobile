@@ -31,7 +31,7 @@ export default function Welcome({ navigation }) {
               color: "#ffffff",
               paddingHorizontal: 0,
               paddingTop: 20,
-              fontFamily: "serif",
+              // fontFamily: "serif",
               width: 300,
             }}
           >
@@ -44,7 +44,7 @@ export default function Welcome({ navigation }) {
               color: "#ffffff",
               paddingHorizontal: 0,
               paddingTop: 10,
-              fontFamily: "serif",
+              // fontFamily: "serif",
               width: 300,
          }}>
         What Repository are you signing up for ?

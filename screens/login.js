@@ -12,6 +12,7 @@ import {
   Alert,
   TouchableWithoutFeedback,
   Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 // import Header from "./components/header";
 // import TodoItem from "./components/todoItem";
@@ -107,8 +108,12 @@ export default function Login({ navigation }) {
   };
 
   return (
-    // <Sandbox />
-    <View style={styles.container}>
+    // <Sandbox /> 
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView>
         <View>
           <Image source={require("../images/house_of_tara_logo.png")} />
@@ -181,7 +186,9 @@ export default function Login({ navigation }) {
           </View>
         </View>
       </ScrollView>
-    </View>
+    {/* </View> */}
+    </TouchableWithoutFeedback>
+  </KeyboardAvoidingView>
   );
 }
 
