@@ -18,7 +18,7 @@ import {
 // import AddTodo from "./components/addTodo";
 // import Sandbox from "./components/sandbox";
 
-export default function App() {
+export default function ForgotPassword({ navigation }) {
   const [emailx, setEmail] = useState("");
 
   const handlePress = () => {
@@ -34,14 +34,24 @@ export default function App() {
       headers: myHeaders,
       body: raw,
     };
-    fetch("http://localhost:7000/users/forgotPassword", requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
+  const url = "https://tarastoreservice.plutospace.space";
+
+  fetch(`${url}/users/doLogin`, requestOptions)
+    .then((res) => res.json())
+    .then((result) => {
+      if (result.status === "SUCCESS") {
+        Alert.alert(result.status, result.message);
+        navigation.navigate("Dashboard", { replace: true });
+        //navigate("/authentication/company-Registration", { replace: true });
+      } else {
+        Alert.alert(result.status, result.message);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   const clickHandler = () => {
     if (emailx.length === 0 || emailx === "") {
       Alert.alert("Damm", "You can't fuckin leave this place empty dude!!");
@@ -55,7 +65,7 @@ export default function App() {
     <View style={styles.container}>
       <ScrollView>
         <View>
-          <Image source={require("./images/house_of_tara_logo.png")} />
+          <Image source={require("../images/house_of_tara_logo.png")} />
         </View>
         <View style={{ borderRadius: 5 }}>
           <Text
@@ -64,23 +74,33 @@ export default function App() {
               fontWeight: "900",
               color: "#ffffff",
               paddingHorizontal: 0,
-              paddingTop: 40,
+              paddingTop: 30,
               fontFamily: "serif",
               width: 300,
             }}
           >
-            FORGOT PASSWORD?.....NO WORRIES WE GOT YOU COVERED
+            FORGOTTEN YOUR PASSWORD?
           </Text>
         </View>
-        <Text style={{ color: "#ffffff" }}>
-          Enter the email attached to your account
+        <Text
+          style={{
+            color: "#ffffff",
+            fontSize: 20,
+            fontWeight: "50",
+            paddingHorizontal: 0,
+            paddingTop: 10,
+            fontFamily: "serif",
+            width: 200,
+          }}
+        >
+          Enter the email attached to your account to reset your password.
         </Text>
         <View style={{ paddingTop: 40 }}>
-          <Text style={styles.inputText}>Email:</Text>
+          <Text style={styles.inputText}></Text>
           <TextInput
             keyboardType="default"
-            placeholder="EmailID"
-            value={usernamex}
+            placeholder="Email"
+            value={emailx}
             onChangeText={(value) => setEmail(value)}
             style={styles.input}
             placeholderTextColor={"#777"}
@@ -88,7 +108,7 @@ export default function App() {
 
           <TouchableOpacity onPress={clickHandler}>
             <View style={styles.submitButton}>
-              <Text style={styles.submitText}>SUBMIT</Text>
+              <Text style={styles.submitText}>SEND INSTRUCTIONS</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -161,4 +181,3 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
 });
-z;

@@ -1,244 +1,63 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Button,
-  TextInput,
-  ScrollView,
-  FlatList,
-  TouchableOpacity,
-  Alert,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
-// import Header from "./components/header";
-// import TodoItem from "./components/todoItem";
-// import AddTodo from "./components/addTodo";
-// import Sandbox from "./components/sandbox";
-// import {Ionicons} from '@ex'
+import React, { useState, useEffect, useCallback } from "react";
+import { StyleSheet, View } from "react-native";
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
+import NavigationStack from "./navigations/navigation";
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
-  const [usernamex, setUsername] = useState("");
-  const [passwordx, setPassword] = useState("");
-  const [rPasswordx, setRPassword] = useState("");
+  const [appIsReady, setAppIsReady] = useState(false);
 
-  const handlePress = () => {
-    const raw = JSON.stringify({
-      username: usernamex,
-      password: passwordx,
-    });
-    const myHeaders = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    };
-
-    const url = "https://tarastoreservice.plutospace.space";
-    fetch(url + "http://users/doLogin", {
-      method: "GET",
-      headers: myHeaders,
-      body: raw,
-    });
-    // const raw = JSON.stringify({
-    //   username: usernamex,
-    //   password: passwordx,
-    // });
-    // const myHeaders = {
-    //   "Accept": "application/json",
-    //   "Content-Type": "application/json",
-    // };
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: myHeaders,
-    //   body: raw,
-    // };
-    // fetch("https://mywebsite.com/endpoint/", requestOptions)
-    // .then((response) => response.json())
-    // .then((data) => console.log(data))
-    // .catch((err) => {
-    //   console.log(err);
-    //  });
-  };
-
-  const clickHandler = () => {
-    if (
-      usernamex.length === 0 ||
-      usernamex === "" ||
-      passwordx.length === 0 ||
-      passwordx === "" ||
-      rPasswordx.length === 0 ||
-      rPasswordx === ""
-    ) {
-      Alert.alert("Damm", "You can't fuckin leave this place empty dude!!");
-    } else {
-      handlePress();
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Pre-load fonts, make any API calls you need to do here
+        await Font.loadAsync({
+          "nunito-regular": require("./assets/fonts/Nunito-Regular.ttf"),
+          "nunito-bold": require("./assets/fonts/Nunito-Bold.ttf"),
+        });
+        // Artificially delay for two seconds to simulate a slow loading
+        // experience. Please remove this if you copy and paste the code!
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+      }
     }
 
-    //fetching api
-    // const raw = JSON.stringify({
-    //   username: usernamex,
-    //   password: passwordx,
-    // });
-    // const myHeaders = {
-    //   Accept: "application/json",
-    //   "Content-Type": "application/json",
-    // };
+    prepare();
+  }, []);
 
-    // const url = "https://tarastoreservice.plutospace.space";
-    // fetch(url + "http://users/doLogin", {
-    //   method: "GET",
-    //   headers: myHeaders,
-    //   body: raw,
-    // });
-  };
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      // This tells the splash screen to hide immediately! If we call this after
+      // `setAppIsReady`, then we may see a blank screen while the app is
+      // loading its initial state and rendering its first pixels. So instead,
+      // we hide the splash screen once we know the root view has already
+      // performed layout.
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
 
   return (
-    // <Sandbox />
-    <View style={styles.container}>
-      <ScrollView>
-        <View>
-          <Image source={require("./images/house_of_tara_logo.png")} />
-        </View>
-        <View style={{ borderRadius: 5 }}>
-          <Text
-            style={{
-              fontSize: 40,
-              fontWeight: "900",
-              color: "#ffffff",
-              paddingHorizontal: 0,
-              paddingTop: 40,
-              fontFamily: "serif",
-              width: 300,
-            }}
-          >
-            Let’s Help You Find Your Match
-          </Text>
-        </View>
-        <Text style={{ color: "#ffffff" }}>
-          Meeting the perfect one shouldn’t be a hassle.
-        </Text>
-        <View style={{ paddingTop: 40 }}>
-          <Text style={styles.inputText}>Username:</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="Username"
-            value={usernamex}
-            onChangeText={(value) => setUsername(value)}
-            style={styles.input}
-            placeholderTextColor={"#777"}
-          />
-          <Text style={styles.inputText}>Password:</Text>
-          <TextInput
-            placeholder="Password"
-            value={passwordx}
-            onChangeText={(value) => setPassword(value)}
-            style={styles.input}
-            secureTextEntry={true}
-            placeholderTextColor={"#777"}
-          />
-          <Text style={styles.inputText}>Confirm Password:</Text>
-          <TextInput
-            placeholder="Confirm Password"
-            value={rPasswordx}
-            onChangeText={(value) => setRPassword(value)}
-            style={styles.input}
-            secureTextEntry={true}
-            placeholderTextColor={"#777"}
-          />
-          <TouchableOpacity onPress={clickHandler}>
-            <View style={styles.loginButton}>
-              <Text style={styles.loginText}>LOGIN</Text>
-              <a href="ForgotPassword.js">Forgot Password</a>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{    alignItems: "center",}}>
-        <View
-          style={{
-            paddingTop: 15,
-            flexDirection: "row",
-          }}
-        >
-          <Text style={styles.inputText}>New Customer?</Text>
-          <TouchableOpacity>
-            <Text style={styles.link}>Register</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity>
-            <Text style={styles.link}>Forgot Password</Text>
-          </TouchableOpacity>
-        </View>
-        </View>
-      </ScrollView>
+    <View style={styles.container} onLayout={onLayoutRootView}>
+      {/* <Text>waddup its a new app</Text> */}
+      <NavigationStack />
     </View>
   );
-}
+  }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: "#0F0F0F",
-  // },
-  // content: {
-  //   padding: 40,
-  // },
-  // list: { marginTop: 20 },
   container: {
     flex: 1,
     backgroundColor: "#0F0F0F",
-    alignItems: "center",
-    paddingTop: 60,
-    justifyContent: "center",
-  },
-  buttonContainer: {
-    marginTop: 20,
-    padding: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#777",
-    padding: 8,
-    margin: 5,
-    width: 300,
-    color: "#fff",
-    paddingHorizontal: 20,
-    borderRadius: 50,
-  },
-  loginButton: {
-    padding: 15,
-    marginTop: 30,
-    backgroundColor: "#F96D02",
-    marginHorizontal: 10,
-    borderRadius: 50,
-  },
-  loginText: {
-    textAlign: "center",
-    color: "#fff",
-  },
-  inputText: {
-    marginTop: 10,
-    alignSelf: "center",
-    color: "#fff",
-  },
-  item: {
-    padding: 30,
-    marginTop: 24,
-    backgroundColor: "#F96D02",
-    fontSize: 24,
-    marginHorizontal: 10,
-  },
-  link: {
-    marginTop: 10,
-    color: "#F96D02",
   },
 });
-{/* <View>
-      {people.map((item) => {
-        return (
-          <View key={item.key}>
-            <Text style={styles.item}>{item.name}</Text>
-          </View>
-        );
-      })}
-    </View> */}
