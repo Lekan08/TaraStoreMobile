@@ -12,6 +12,7 @@ import Checkout from "../screens/checkout"
 import Dashboard from "../screens/dashboard";
 import kpurkish from "../screens/kpurkish";
 import { ColorSpace } from "react-native-reanimated";
+import ChangePassword from "../screens/changePassword";
 
 const Stack = createStackNavigator();
 
@@ -22,7 +23,7 @@ function NavigationStack() {
         initialRouteName="Login"
         screenOptions={{
           headerTintColor: "white",
-          headerStyle: { backgroundColor: "#0F0F0F", height: 80 },
+          headerStyle: { backgroundColor: "#F96D02", height: 80 },
         }}
       >
      
@@ -65,6 +66,7 @@ function NavigationStack() {
           component={Profile}
           options={{ title: "Profile" }}
         />
+<<<<<<< HEAD
         
       <Stack.Screen
           name="Home"
@@ -79,6 +81,12 @@ function NavigationStack() {
           name="Checkout"
           component={Checkout}
           options={{ title: "Checkout" }}
+=======
+        <Stack.Screen
+          name="changePassword"
+          component={ChangePassword}
+          options={{ title: "Change your password" }}
+>>>>>>> 54f8d311c2210cf475a8e89a1c053b50462a3091
         />
       </Stack.Navigator>
     </NavigationContainer>

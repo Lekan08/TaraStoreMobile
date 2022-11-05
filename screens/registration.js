@@ -12,10 +12,11 @@ import {
   Form,
   Alert,
   TouchableWithoutFeedback,
-  Keyboard,
+  Keyboard, 
 } from "react-native";
-import SweetAlert from 'react-native-sweet-alert';
+// import SweetAlert from 'react-native-sweet-alert';
 import { Picker } from "@react-native-picker/picker";
+// import SelectList from 'react-native-dropdown-select-list'
 import AllCountriesAndStates from "../countries-states-master/countries";
 // import Header from "./components/header";
 // import TodoItem from "./components/todoItem";
@@ -33,6 +34,11 @@ export default function Registration({ navigation }) {
   // const [countryx, setCountryx] = useState("");
 
   const { countriesAndStates: AlCountry } = AllCountriesAndStates();
+
+  
+  const data = AlCountry.map((data) => {
+    return {key:data.code3, value:data.name}
+  });
   const [allStates, setAllStates] = useState([]);
   const [residentialStatex, setResidentialState] = useState("");
   const [residentialCountryx, setResidentialCountry] = useState("");
@@ -90,6 +96,7 @@ export default function Registration({ navigation }) {
         }
       })
       .catch((error) => {
+        Alert.alert(error.status, error.message);
         console.log(error);
       });
 
@@ -220,6 +227,18 @@ export default function Registration({ navigation }) {
             style={styles.input}
             placeholderTextColor={"#777"}
           />
+          <Text style={styles.inputText}>Username:</Text>
+          <TextInput
+            keyboardType="default"
+            placeholder="Username"
+            value={usernamex}
+            onChangeText={(value) => setUsername(value)}
+            style={styles.input}
+            placeholderTextColor={"#777"}
+          />
+
+    {/* <SelectList setSelected={setResidentialCountry} data={data} onSelect={() => handleOnChangeRCCountry(residentialCountryx)} dropdownStyles={{color:"#fff"}} /> */}
+
           <Picker
             style={{ color: "#ffffff" }}
             selectedValue={residentialCountryx}
