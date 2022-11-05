@@ -26,7 +26,6 @@ export default function Registration({ navigation }) {
   const [firstnamex, setFirstname] = useState("");
   const [lastnamex, setLastname] = useState("");
   const [emailx, setEmail] = useState("");
-  const [usernamex, setUsername] = useState("");
   const [cityx, setCity] = useState("");
   const [addressx, setAddress] = useState("");
   const [passwordx, setPassword] = useState("");
@@ -59,7 +58,6 @@ export default function Registration({ navigation }) {
       firstname: firstnamex,
       lastname: lastnamex,
       email: emailx,
-      username: usernamex,
       country: residentialCountryx,
       state: residentialStatex,
       city: cityx,
@@ -84,9 +82,9 @@ export default function Registration({ navigation }) {
       .then((result) => {
         console.log(result);
         if (result.status === "SUCCESS") {
-          Alert.alert(result.status, result.message);
-          navigation.navigate("Login", { replace: true });
-          //navigate("/authentication/company-Registration", { replace: true });
+          Alert.alert(result.status, result.message, [{text: "Continue", onPress:() =>{
+          navigation.navigate("Home", {replace: true})  
+          }}]);
         } else {
           Alert.alert(result.status, result.message);
         }
@@ -124,8 +122,6 @@ export default function Registration({ navigation }) {
       lastnamex === "" ||
       emailx.length === 0 ||
       emailx === "" ||
-      usernamex.length === 0 ||
-      usernamex === "" ||
       cityx.length === 0 ||
       cityx === "" ||
       addressx.length === 0 ||
@@ -221,15 +217,6 @@ export default function Registration({ navigation }) {
             placeholder="Email"
             value={emailx}
             onChangeText={(value) => setEmail(value)}
-            style={styles.input}
-            placeholderTextColor={"#777"}
-          />
-          <Text style={styles.inputText}>Username:</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="Username"
-            value={usernamex}
-            onChangeText={(value) => setUsername(value)}
             style={styles.input}
             placeholderTextColor={"#777"}
           />

@@ -1,9 +1,9 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19000,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://nrapm0u.techeverywhere.tarastoremobile.exp.direct",
+  "packagerNgrokUrl": "https://nrapm0u.techeverywhere.tarastoremobile.exp.direct",
+  "ngrokPid": 4204,
   "packagerPid": null,
   "webpackServerPort": null
 }

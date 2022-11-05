@@ -8,8 +8,9 @@ import BottomTabs from "./bottomNavigation";
 import Home from "../screens/home";
 import Welcome from "../screens/welcome";
 import Profile from "../screens/profile";
+import Checkout from "../screens/checkout"
 import Dashboard from "../screens/dashboard";
-import kpurkish from "../screens/kpurkish"
+import kpurkish from "../screens/kpurkish";
 import { ColorSpace } from "react-native-reanimated";
 
 const Stack = createStackNavigator();
@@ -18,22 +19,13 @@ function NavigationStack() {
   return (
     <NavigationContainer theme={{ colors:{ background: "#0f0f0f"} }}>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Login"
         screenOptions={{
           headerTintColor: "white",
           headerStyle: { backgroundColor: "#0F0F0F", height: 80 },
         }}
       >
-      
-      <Stack.Screen
-          name="Home"
-          component={BottomTabs}
-          options={{
-            title: "Home",
-            headerShown: false,
-            //   headerStyle: { backgroundColor: "tomato" },
-          }}
-        />
+     
 
        <Stack.Screen
           name="Login"
@@ -72,6 +64,21 @@ function NavigationStack() {
           name="Profile"
           component={Profile}
           options={{ title: "Profile" }}
+        />
+        
+      <Stack.Screen
+          name="Home"
+          component={BottomTabs}
+          options={{
+            title: "Home",
+            headerShown: false,
+            //   headerStyle: { backgroundColor: "tomato" },
+          }}
+        />
+  <Stack.Screen
+          name="Checkout"
+          component={Checkout}
+          options={{ title: "Checkout" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

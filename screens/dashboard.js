@@ -24,6 +24,21 @@ export default function Dashboard({ navigation }) {
   //   },
   //   { title: "Not So 'Final' Fantasy", rating: 3, body: "lorem ipsum", key: 3 },
   // ]);
+
+  // const myHeaders = {
+  //   Accept: "application/json",
+  //   "Content-Type": "application/json",
+  // };
+  // const requestOptions = {
+  //   method: "GET",
+  //   headers: myHeaders,
+  //   body: raw,
+  //   redirect: "follow",
+  // };
+
+  // const url = "https://tarastoreservice.plutospace.space";
+
+
   return (
     <View style={globalStyles.dashContainer}>
       <View
