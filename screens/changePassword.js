@@ -1,48 +1,53 @@
 import { Alert } from "bootstrap-4-react/lib/components";
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 export default function ChangePassword({ navigation }) {
+    const [usernamex, getUsername] = useState("");
     const [currentPasswordx, getCurrentPassword] = useState("");
     const [newPasswordx, getNewPassword] = useState("");
     const [newRPasswordx, getRNewPassword] = useState("")
 
     const handlePress = () => {
-        const raw = JSON.stringify({
-            newPassword: newPasswordx,
-        });const myHeaders = {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-              };
-        
-              const url = "https://tarastoreservice.plutospace.space";
-              fetch(url + "http://users/changePass", {
-                method: "POST",
-                headers: myHeaders,
-                body:   raw,
-              })
-              .then((response) => response.json())
-              .then((data) => {
-                console.log(data)
-                Alert.alert(data.status, data.message, [{text: "Continue", onPress:() => {
-                  navigation.navigate("Home")
-                } }]);
-                })
-              .catch((err) => {
-                
-                Alert.alert(err.status, err.message);
-                console.log(err);
-               });
-
-    }    
-
+      const raw = JSON.stringify({
+        username: usernamex,
+        password: currentPasswordx,
+        newPassword: newPasswordx,
+      });
+      const myHeaders = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      };
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+  
+  
+      const url = "https://tarastoreservice.plutospace.space";
+  
+      fetch(`${url}/users/changePass`, requestOptions)
+          .then((res) => res.json())
+          .then((result) => {
+         if (result.status === "SUCCESS"){
+          Alert.alert(result.status, result.message, [{text: "Continue", onPress:() => {
+            navigation.navigate("Home", {replace: true})
+          }}]);
+         }else{ 
+          Alert.alert(result.status, result.message);
+         }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+         
+        };
+ 
     const clickHandler = () => {
 
-        if(currentPasswordx.length === 0 || currentPasswordx.length === "" ||
+        if(usernamex.length === 0 || usernamex.length === "" || 
+           currentPasswordx.length === 0 || currentPasswordx.length === "" ||
            newPasswordx.length === 0 || newPasswordx.length === "" ||
            newRPasswordx.length === 0 || newRPasswordx.length === ""){
            Alert.Alert("Please fill all empty textfields") 
@@ -56,6 +61,7 @@ export default function ChangePassword({ navigation }) {
 
     return(
         <View>
+          <ScrollView>
          {/* <Image source={require("../images/house_of_tara_logo.png")} /> */}
 
             <View>
@@ -73,10 +79,20 @@ export default function ChangePassword({ navigation }) {
                     Change Password
                 </Text>
             </View>
+            <Text style={styles.inputText}>Username:</Text>
+            <TextInput
+                placeholder="Enter your email"
+                keyboardType="default"
+                value={usernamex}
+                onChangeText={(value) => getUsername(value)}
+                style={styles.input}
+                secureTextEntry={true}
+                placeholderTextColor={"#777"}
+            /> 
             <Text style={styles.inputText}>Current password:</Text>
             <TextInput
                 placeholder="Enter current Password"
-                value={rPasswordx}
+                value={currentPasswordx}
                 onChangeText={(value) => getCurrentPassword(value)}
                 style={styles.input}
                 secureTextEntry={true}
@@ -85,7 +101,7 @@ export default function ChangePassword({ navigation }) {
             <Text style={styles.inputText}>New password:</Text>
             <TextInput
                 placeholder="Enter a new Password"
-                value={rPasswordx}
+                value={newPasswordx}
                 onChangeText={(value) => getNewPassword(value)}
                 style={styles.input}
                 secureTextEntry={true}
@@ -94,7 +110,7 @@ export default function ChangePassword({ navigation }) {
             <Text style={styles.inputText}>Confirm new password:</Text>
             <TextInput
                 placeholder="Retype new Password"
-                value={rPasswordx}
+                value={newRPasswordx}
                 onChangeText={(value) => getRNewPassword(value)}
                 style={styles.input}
                 secureTextEntry={true}
@@ -102,10 +118,11 @@ export default function ChangePassword({ navigation }) {
             /> 
             <TouchableOpacity onPress={clickHandler}>
                 <View style={styles.changePassButton}>
-                    <Text style={styles.changePassText}>Change password</Text>
+                    <Text style={styles.inputText}>Change password</Text>
                 </View>
             </TouchableOpacity>
-
+        
+            </ScrollView>
         </View>
 
     )
@@ -118,6 +135,8 @@ const styles = StyleSheet.create({
         margin: 5,
         width: 300,
         color: "#fff",
+        marginTop: 10,
+        alignSelf: "center",
         paddingHorizontal: 20,
         borderRadius: 50,
       },
@@ -128,7 +147,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         borderRadius: 50,
       },
-      changePassText: {
+      inputText: {
         textAlign: "center",
         color: "#fff",
       },  
