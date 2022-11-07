@@ -77,7 +77,7 @@ function NavigationStack() {
         <Stack.Screen
           name="changePassword"
           component={ChangePassword}
-          options={{ title: "Change your password" }}
+          options={{ title: "" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

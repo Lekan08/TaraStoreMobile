@@ -30,7 +30,7 @@ export default function Registration({ navigation }) {
   const [usernamex, setUsername] = useState("");
   const [cityx, setCity] = useState("");
   const [addressx, setAddress] = useState("");
-  const [passwordx, setPassword] = useState("");
+  const [passwordx, setPassword] = useState(""); 
   const [rPasswordx, setRPassword] = useState("");
   // const [countryx, setCountryx] = useState("");
 

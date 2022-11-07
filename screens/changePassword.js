@@ -1,6 +1,13 @@
-import { Alert } from "bootstrap-4-react/lib/components";
 import React, { useState } from "react";
-import { ScrollView } from "react-native-gesture-handler";
+import {
+  View,
+  Text,
+  TextInput,
+  Alert,
+  StyleSheet,  
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 export default function ChangePassword({ navigation }) {
     const [usernamex, getUsername] = useState("");
     const [currentPasswordx, getCurrentPassword] = useState("");
@@ -76,9 +83,10 @@ export default function ChangePassword({ navigation }) {
                         width: 300,
                 }}
                 >
-                    Change Password
+                    Change your Password
                 </Text>
-            </View>
+            </View>  
+            <View style={{ paddingTop: 40, paddingBottom: 40 }}>
             <Text style={styles.inputText}>Username:</Text>
             <TextInput
                 placeholder="Enter your email"
@@ -86,7 +94,6 @@ export default function ChangePassword({ navigation }) {
                 value={usernamex}
                 onChangeText={(value) => getUsername(value)}
                 style={styles.input}
-                secureTextEntry={true}
                 placeholderTextColor={"#777"}
             /> 
             <Text style={styles.inputText}>Current password:</Text>
@@ -116,12 +123,13 @@ export default function ChangePassword({ navigation }) {
                 secureTextEntry={true}
                 placeholderTextColor={"#777"}
             /> 
+        
             <TouchableOpacity onPress={clickHandler}>
                 <View style={styles.changePassButton}>
                     <Text style={styles.inputText}>Change password</Text>
                 </View>
             </TouchableOpacity>
-        
+             </View>
             </ScrollView>
         </View>
 
