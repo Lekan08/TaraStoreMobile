@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 
 function NavigationStack() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={{ colors: { background: "#0f0f0f" } }}>
       <Stack.Navigator
         initialRouteName="Welcome"
         screenOptions={{
