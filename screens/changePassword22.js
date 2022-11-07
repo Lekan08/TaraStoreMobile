@@ -13,14 +13,11 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-// import Header from "./components/header";
-// import TodoItem from "./components/todoItem";
-// import AddTodo from "./components/addTodo";
-// import Sandbox from "./components/sandbox";
-// import {Ionicons} from '@ex'
 export default function Login({ navigation }) {
-  const [usernamex, setUsername] = useState("");
-  const [passwordx, setPassword] = useState("");
+  const [emailx, setEmail] = useState("");
+  const [cpasswordx, setCpassword] = useState("");
+  const [newpasswordx, setNewpassword] = useState("");
+  const [confirmpasswordx, setConfirmpassword] = useState("");
 
   const [passwordShown, setPasswordShown] = useState(false);
 
@@ -33,8 +30,8 @@ export default function Login({ navigation }) {
 
   const handlePress = () => {
     const raw = JSON.stringify({
-      username: usernamex,
-      password: passwordx,
+      email: emailx,
+    
     });
     const myHeaders = {
       "Accept": "application/json",
@@ -88,10 +85,14 @@ export default function Login({ navigation }) {
   const clickHandler = () => {
     // navigation.navigate("Home");
     if (
-      usernamex.length === 0 ||
-      usernamex === "" ||
-      passwordx.length === 0 ||
-      passwordx === "" 
+      emailx.length === 0 ||
+      emailx === "" ||
+      cpasswordx.length === 0 ||
+      cpasswordx === "" ||
+      newpasswordx.length === 0 ||
+      newpasswordx === "" ||
+      confirmpasswordx.length === 0 ||
+      confirmpasswordx === "" 
     ) {
       Alert.alert("Damm", "You can't fuckin leave this place empty dude!!");
     } else {
@@ -142,13 +143,12 @@ export default function Login({ navigation }) {
           Meeting the perfect one shouldn’t be a hassle.
         </Text>
         <View style={{ paddingTop: 40 }}>
-          <Text style={styles.inputText}>Username:</Text>
+          <Text style={styles.inputText}>Email:</Text>
           <TextInput
-           type={passwordShown ? "text" : "password"}
             keyboardType="default"
-            placeholder="Username"
-            value={usernamex}
-            onChangeText={(value) => setUsername(value)}
+            placeholder="email"
+            value={emailx}
+            onChangeText={(value) => setEmail(value)}
             style={styles.input}
             placeholderTextColor={"#777"}
           />
@@ -161,12 +161,32 @@ export default function Login({ navigation }) {
               }}>
                     show password
                   </Text>
-          <Text style={styles.inputText}>Password:</Text>
+          <Text style={styles.inputText}> Current Password:</Text>
           <TextInput
            type={passwordShown ? "text" : "password"}
-            placeholder="Password"
-            value={passwordx}
-            onChangeText={(value) => setPassword(value)}
+            placeholder="Currentpassword"
+            value={cpasswordx}
+            onChangeText={(value) => setCpassword(value)}
+            style={styles.input}
+            secureTextEntry={true}
+            placeholderTextColor={"#777"}
+          />
+          <Text style={styles.inputText}> New Password:</Text>
+           <TextInput
+           type={passwordShown ? "text" : "password"}
+            placeholder="New Password"
+            value={newpasswordx}
+            onChangeText={(value) => setNewpassword(value)}
+            style={styles.input}
+            secureTextEntry={true}
+            placeholderTextColor={"#777"}
+          />
+          <Text style={styles.inputText}> Confirm Password:</Text>
+           <TextInput
+           type={passwordShown ? "text" : "password"}
+            placeholder="Currentpassword"
+            value={confirmpasswordx}
+            onChangeText={(value) => setConfirmpassword(value)}
             style={styles.input}
             secureTextEntry={true}
             placeholderTextColor={"#777"}
