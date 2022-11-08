@@ -27,7 +27,6 @@ function NavigationStack() {
         }}
       >
      
-
        <Stack.Screen
           name="Login"
           component={Login}
@@ -66,7 +65,6 @@ function NavigationStack() {
           component={Profile}
           options={{ title: "Profile" }}
         />
-<<<<<<< HEAD
         
       <Stack.Screen
           name="Home"
@@ -77,16 +75,10 @@ function NavigationStack() {
             //   headerStyle: { backgroundColor: "tomato" },
           }}
         />
-  <Stack.Screen
-          name="Checkout"
-          component={Checkout}
-          options={{ title: "Checkout" }}
-=======
         <Stack.Screen
           name="changePassword"
           component={ChangePassword}
           options={{ title: "Change your password" }}
->>>>>>> 54f8d311c2210cf475a8e89a1c053b50462a3091
         />
       </Stack.Navigator>
     </NavigationContainer>

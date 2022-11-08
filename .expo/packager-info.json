@@ -1,15 +1,9 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19000,
-<<<<<<< HEAD
   "expoServerNgrokUrl": "https://nrapm0u.techeverywhere.tarastoremobile.exp.direct",
   "packagerNgrokUrl": "https://nrapm0u.techeverywhere.tarastoremobile.exp.direct",
-  "ngrokPid": 4204,
-=======
-  "expoServerNgrokUrl": "https://nrapm0u.anonymous.tarastoremobile.exp.direct",
-  "packagerNgrokUrl": "https://nrapm0u.anonymous.tarastoremobile.exp.direct",
-  "ngrokPid": 11420,
->>>>>>> 54f8d311c2210cf475a8e89a1c053b50462a3091
+  "ngrokPid": 17216,
   "packagerPid": null,
   "webpackServerPort": null
 }
