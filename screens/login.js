@@ -10,34 +10,74 @@ import {
   FlatList,
   TouchableOpacity,
   Alert,
+  Pressable,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { PayWithFlutterwave } from "flutterwave-react-native";
+// or import PayWithFlutterwave from 'flutterwave-react-native';
+import { REACT_APP_TARA_URL, FLUTTER_AUTH_KEY } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // import Header from "./components/header";
 // import TodoItem from "./components/todoItem";
 // import AddTodo from "./components/addTodo";
 // import Sandbox from "./components/sandbox";
 // import {Ionicons} from '@ex'
+
 export default function Login({ navigation }) {
   const [usernamex, setUsername] = useState("");
   const [passwordx, setPassword] = useState("");
 
+  const [passwordShown, setPasswordShown] = useState(true);
+
   const handlePress = () => {
     const raw = JSON.stringify({
-      username: usernamex,
+      username: usernamex.toLowerCase(),
       password: passwordx,
     });
     const myHeaders = {
       Accept: "application/json",
       "Content-Type": "application/json",
     };
-
-    const url = "https://tarastoreservice.plutospace.space";
-    fetch(url + "http://users/doLogin", {
-      method: "GET",
+    const requestOptions = {
+      method: "POST",
       headers: myHeaders,
       body: raw,
-    });
+      redirect: "follow",
+    };
+
+    fetch(`${REACT_APP_TARA_URL}/users/doLogin`, requestOptions)
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if (result.status === "SUCCESS") {
+          // storing data
+          const storeUser = async (value) => {
+            try {
+              await AsyncStorage.setItem("userInfo", JSON.stringify(value));
+            } catch (error) {
+              console.log(error);
+            }
+          };
+          storeUser(result.data);
+          Alert.alert(result.status, result.message, [
+            {
+              text: "Continue",
+              onPress: () => {
+                navigation.navigate("Home", { replace: true });
+              },
+            },
+          ]);
+        } else {
+          Alert.alert(result.status, result.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     // const raw = JSON.stringify({
     //   username: usernamex,
     //   password: passwordx,
@@ -60,14 +100,14 @@ export default function Login({ navigation }) {
   };
 
   const clickHandler = () => {
-    navigation.navigate("Home");
+    // navigation.navigate("Home");
     if (
       usernamex.length === 0 ||
       usernamex === "" ||
       passwordx.length === 0 ||
-      passwordx === "" 
+      passwordx === ""
     ) {
-      Alert.alert("Damm", "You can't fuckin leave this place empty dude!!");
+      Alert.alert("EMPTY_TEXTFIELDS", "Fill empty textfields");
     } else {
       handlePress();
     }
@@ -82,12 +122,28 @@ export default function Login({ navigation }) {
     //   "Content-Type": "application/json",
     // };
 
-    // const url = "https://tarastoreservice.plutospace.space";
-    // fetch(url + "http://users/doLogin", {
+    // fetch(REACT_APP_TARA_URL + "http://users/doLogin", {
     //   method: "GET",
     //   headers: myHeaders,
     //   body: raw,
     // });
+  };
+
+  /* An example function called when transaction is completed successfully or canceled */
+  const handleOnRedirect = (data) => {
+    console.log(data);
+  };
+
+  /* An example function to generate a random transaction reference */
+  const generateTransactionRef = (length) => {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return `flw_tx_ref_${result}`;
   };
 
   return (
@@ -125,17 +181,73 @@ export default function Login({ navigation }) {
             style={styles.input}
             placeholderTextColor={"#777"}
           />
+
           <Text style={styles.inputText}>Password:</Text>
-          <TextInput
-            placeholder="Password"
-            value={passwordx}
-            onChangeText={(value) => setPassword(value)}
-            style={styles.input}
-            secureTextEntry={true}
-            placeholderTextColor={"#777"}
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Password"
+              value={passwordx}
+              onChangeText={(value) => setPassword(value)}
+              secureTextEntry={passwordShown}
+              placeholderTextColor={"#777"}
+              style={styles.inputField}
+              name="password"
+              autoCapitalize="none"
+              autoCorrect={false}
+              textContentType="newPassword"
+              enablesReturnKeyAutomatically
+            />
+            <Pressable
+              onPress={() => {
+                passwordShown
+                  ? setPasswordShown(false)
+                  : setPasswordShown(true);
+              }}
+            >
+              <Icon
+                name={passwordShown ? "eye-off" : "eye"}
+                size={22}
+                color="grey"
+              />
+            </Pressable>
+          </View>
+
+          <PayWithFlutterwave
+            onRedirect={handleOnRedirect}
+            options={{
+              tx_ref: generateTransactionRef(10),
+              authorization: `${FLUTTER_AUTH_KEY}`,
+              customer: {
+                email: "user@gmail.com",
+              },
+              amount: 2000,
+              currency: "NGN",
+              payment_options: "card",
+            }}
           />
-          {/* <TextInput label={passwordx} right={ <TextInput.Icon color="grey" name={'eye'} />} /> */}
-        
+          <PayWithFlutterwave
+            onRedirect={handleOnRedirect}
+            options={{
+              tx_ref: generateTransactionRef(10),
+              authorization: `${FLUTTER_AUTH_KEY}`,
+              customer: {
+                email: "customer-email@example.com",
+              },
+              amount: 2000,
+              currency: "NGN",
+              payment_options: "card",
+            }}
+            customButton={(props) => (
+              <TouchableOpacity
+                style={styles.loginButton}
+                onPress={props.onPress}
+                isBusy={props.isInitializing}
+                disabled={props.disabled}
+              >
+                <Text style={styles.loginText}>Pay $500</Text>
+              </TouchableOpacity>
+            )}
+          />
           <TouchableOpacity onPress={clickHandler}>
             <View style={styles.loginButton}>
               <Text style={styles.loginText}>LOGIN</Text>
@@ -150,9 +262,7 @@ export default function Login({ navigation }) {
             }}
           >
             <Text style={styles.inputText}>Don't have an account? </Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Registration")}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate("Welcome")}>
               <Text style={styles.link}>Register</Text>
             </TouchableOpacity>
           </View>
@@ -199,6 +309,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 50,
   },
+  inputContainer: {
+    borderWidth: 1,
+    borderColor: "#777",
+    padding: 8,
+    margin: 5,
+    width: 300,
+    color: "#fff",
+    paddingHorizontal: 20,
+    borderRadius: 50,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  inputField: {
+    width: "90%",
+    color: "#fff",
+  },
   loginButton: {
     padding: 15,
     marginTop: 30,
@@ -227,14 +353,14 @@ const styles = StyleSheet.create({
     color: "#F96D02",
   },
 });
-{
-  /* <View>
-      {people.map((item) => {
-        return (
-          <View key={item.key}>
-            <Text style={styles.item}>{item.name}</Text>
-          </View>
-        );
-      })}
-    </View> */
-}
+// {
+//   <View>
+//       {people.map((item) => {
+//         return (
+//           <View key={item.key}>
+//             <Text style={styles.item}>{item.name}</Text>
+//           </View>
+//         );
+//       })}
+//     </View>
+// }

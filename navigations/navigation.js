@@ -7,6 +7,12 @@ import ForgotPassword from "../screens/forgotPassword";
 import BottomTabs from "./bottomNavigation";
 import Home from "../screens/home";
 import Welcome from "../screens/welcome";
+import Checkout from "../screens/checkout";
+import Dashboard from "../screens/dashboard";
+import kpurkish from "../screens/kpurkish";
+import { ColorSpace } from "react-native-reanimated";
+import ChangePassword from "../screens/changePassword";
+import Cart from "../screens/cart";
 
 const Stack = createStackNavigator();
 
@@ -14,29 +20,32 @@ function NavigationStack() {
   return (
     <NavigationContainer theme={{ colors: { background: "#0f0f0f" } }}>
       <Stack.Navigator
-        initialRouteName="Welcome"
+        initialRouteName="Login"
         screenOptions={{
           headerTintColor: "white",
           headerStyle: { backgroundColor: "#F96D02", height: 80 },
         }}
       >
         <Stack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{
-            title: "Welcome",
-            //   headerStyle: { backgroundColor: "tomato" },
-          }}
-        />
-        <Stack.Screen
           name="Login"
           component={Login}
           options={{
             headerShown: false,
+            headerTintColor: "white",
             title: "Login",
             //   headerStyle: { backgroundColor: "tomato" },
           }}
         />
+        <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{
+            title: "Welcome",
+            headerTintColor: "white",
+            //   headerStyle: { backgroundColor: "tomato" },
+          }}
+        />
+
         <Stack.Screen
           name="Registration"
           component={Registration}
@@ -45,6 +54,12 @@ function NavigationStack() {
             //   headerStyle: { backgroundColor: "tomato" },
           }}
         />
+        <Stack.Screen
+          name="ForgotPassword"
+          component={ForgotPassword}
+          options={{ title: "Forgot Password" }}
+        />
+
         <Stack.Screen
           name="Home"
           component={BottomTabs}
@@ -55,9 +70,19 @@ function NavigationStack() {
           }}
         />
         <Stack.Screen
-          name="ForgotPassword"
-          component={ForgotPassword}
-          options={{ title: "Forgot Password" }}
+          name="Checkout"
+          component={Checkout}
+          options={{ title: "Checkout" }}
+        />
+        <Stack.Screen
+          name="changePassword"
+          component={ChangePassword}
+          options={{ title: "Change your password" }}
+        />
+        <Stack.Screen
+          name="Cart"
+          component={Cart}
+          options={{ title: "Cart", headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
