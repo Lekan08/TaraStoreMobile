@@ -8,8 +8,12 @@
 =======
   "expoServerNgrokUrl": "https://nrapm0u.anonymous.tarastoremobile.exp.direct",
   "packagerNgrokUrl": "https://nrapm0u.anonymous.tarastoremobile.exp.direct",
+<<<<<<< HEAD
+  "ngrokPid": 35192,
+=======
   "ngrokPid": 11420,
 >>>>>>> 54f8d311c2210cf475a8e89a1c053b50462a3091
+>>>>>>> 599957fd93d7f6d9cae6bbbedbcadf9fb9b2a3f8
   "packagerPid": null,
   "webpackServerPort": null
 }
