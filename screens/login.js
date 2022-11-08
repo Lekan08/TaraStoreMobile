@@ -20,6 +20,7 @@ import { PayWithFlutterwave } from "flutterwave-react-native";
 // or import PayWithFlutterwave from 'flutterwave-react-native';
 import { REACT_APP_TARA_URL, FLUTTER_AUTH_KEY } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Loader, InnerLoader } from "../components/loader";
 
 // import Header from "./components/header";
 // import TodoItem from "./components/todoItem";
@@ -30,10 +31,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Login({ navigation }) {
   const [usernamex, setUsername] = useState("");
   const [passwordx, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [passwordShown, setPasswordShown] = useState(true);
 
   const handlePress = () => {
+    setLoading(true);
     const raw = JSON.stringify({
       username: usernamex.toLowerCase(),
       password: passwordx,
@@ -52,6 +55,7 @@ export default function Login({ navigation }) {
     fetch(`${REACT_APP_TARA_URL}/users/doLogin`, requestOptions)
       .then((res) => res.json())
       .then((result) => {
+        setLoading(false);
         console.log(result);
         if (result.status === "SUCCESS") {
           // storing data
@@ -63,19 +67,22 @@ export default function Login({ navigation }) {
             }
           };
           storeUser(result.data);
-          Alert.alert(result.status, result.message, [
-            {
-              text: "Continue",
-              onPress: () => {
-                navigation.navigate("Home", { replace: true });
-              },
-            },
-          ]);
+          navigation.navigate("Home", { replace: true });
+
+          // Alert.alert(result.status, result.message, [
+          //   {
+          //     text: "Continue",
+          //     onPress: () => {
+          //       navigation.navigate("Home", { replace: true });
+          //     },
+          //   },
+          // ]);
         } else {
           Alert.alert(result.status, result.message);
         }
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
     // const raw = JSON.stringify({
@@ -249,8 +256,14 @@ export default function Login({ navigation }) {
             )}
           />
           <TouchableOpacity onPress={clickHandler}>
-            <View style={styles.loginButton}>
+            <View
+              style={[
+                styles.loginButton,
+                { flexDirection: "row", justifyContent: "center" },
+              ]}
+            >
               <Text style={styles.loginText}>LOGIN</Text>
+              <InnerLoader animating={loading} color="#fff" size="small" />
             </View>
           </TouchableOpacity>
         </View>
@@ -275,6 +288,7 @@ export default function Login({ navigation }) {
           </View>
         </View>
       </ScrollView>
+      {/* <Loader animating={true} /> */}
     </View>
   );
 }

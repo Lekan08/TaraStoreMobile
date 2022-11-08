@@ -45,7 +45,7 @@ export default function Dashboard({ navigation }) {
       const getUser = async () => {
         try {
           const userData = JSON.parse(await AsyncStorage.getItem("userInfo"));
-          setUserName(`${userData.firstname} ${userData.lastname}`);
+          setUserName(`${userData.firstname}`);
         } catch (error) {
           console.log(error);
         }
