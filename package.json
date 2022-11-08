@@ -9,8 +9,9 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-masked-view/masked-view": "0.2.7",
-    "@react-native-picker/picker": "2.4.2",
+    "@react-native-picker/picker": "^2.4.2",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/drawer": "^6.5.0",
     "@react-navigation/native": "^6.0.13",
@@ -19,6 +20,7 @@
     "expo": "~46.0.16",
     "expo-splash-screen": "~0.16.2",
     "expo-status-bar": "~1.4.0",
+    "flutterwave-react-native": "^1.0.2",
     "react": "18.0.0",
     "react-native": "0.69.6",
     "react-native-dropdown-select-list": "^1.0.23",

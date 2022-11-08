@@ -201,7 +201,7 @@ export default function Registration({ navigation }) {
             placeholderTextColor={"#777"}
           />
           <Picker
-            style={{ color: "#ffffff" }}
+            style={{ color: "#ffff" }}
             selectedValue={residentialCountryx}
             onValueChange= {(newValue) => handleOnChangeRCCountry(newValue)}
           >
