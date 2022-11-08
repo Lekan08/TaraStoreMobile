@@ -12,7 +12,20 @@ import { globalStyles } from "../styles/global";
 export default function TransactionHistory({ navigation }) {
   return (
     <View style={globalStyles.container}>
-      <Text style={globalStyles.titleText}>Transaction History Screen</Text>
+    <View style={{
+      backgroundColor: "#54B435",
+      height:"100%",
+      borderRadius: 20,
+    }}>
+<Text style={{
+  color: "#ffff",
+  fontSize: 50,
+  alignSelf:"center",
+  paddingTop: 40,
+}}>
+  YOUR SHITTY SECRET 😂😂🤣
+</Text>
+    </View>
     </View>
   );
 }
