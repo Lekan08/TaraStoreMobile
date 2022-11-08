@@ -18,7 +18,7 @@ export default function Profile({ navigation }) {
         <View style={{
           backgroundColor: "#F96D02",
           height: "30%",
-          width:"70%",
+          width:"100%",
           alignContent: "center",
           justifyContent: "center",
           borderRadius: 20,
@@ -27,8 +27,9 @@ export default function Profile({ navigation }) {
           <Text style={{
             fontSize: 15,
             color: "#ffff",
-            alignSelf:"center",
-          }}> Change Password</Text>
+            // alignSelf:"center",
+            // borderBottomWidth: 5
+          }}>    Change Password</Text>
         </View>
       </TouchableOpacity>
     </View>

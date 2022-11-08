@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,8 +10,8 @@ import {
 } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { globalStyles } from "../styles/global";
-import { ScrollView } from "react-native-gesture-handler";
 import { Con, Col, Row } from "../components/grid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Dashboard({ navigation }) {
   // const [reviews, setReviews] = useState([
@@ -37,7 +37,25 @@ export default function Dashboard({ navigation }) {
   // };
 
   // const url = "https://tarastoreservice.plutospace.space";
-
+  const [userName, setUserName] = useState("");
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      // getting data
+      const getUser = async () => {
+        try {
+          const userData = JSON.parse(await AsyncStorage.getItem("userInfo"));
+          setUserName(`${userData.firstname} ${userData.lastname}`);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getUser();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <View style={globalStyles.dashContainer}>
@@ -54,7 +72,7 @@ export default function Dashboard({ navigation }) {
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            marginTop:60
+            marginTop: 60,
           }}
         >
           <View
@@ -67,15 +85,18 @@ export default function Dashboard({ navigation }) {
               justifyContent: "center",
               alignItems: "center",
               borderRadius: 5,
-              marginLeft: 20
+              marginLeft: 20,
             }}
           >
             <Text
-          style={{
-            fontSize: 15,
-            fontWeight: "bold",
-            color: "#fff",
-          }}>Switch</Text>
+              style={{
+                fontSize: 15,
+                fontWeight: "bold",
+                color: "#fff",
+              }}
+            >
+              Switch
+            </Text>
           </View>
           <View
             style={{
@@ -87,11 +108,13 @@ export default function Dashboard({ navigation }) {
               justifyContent: "center",
               alignItems: "center",
               borderRadius: 60,
-              marginRight: 20
+              marginRight: 20,
             }}
           >
-          <Image source={require("../images/kpurkish.jpeg")} 
-                  style={{ width: 100, borderRadius: 50, height: 100 }} />
+            <Image
+              source={require("../images/kpurkish.jpeg")}
+              style={{ width: 100, borderRadius: 50, height: 100 }}
+            />
           </View>
         </View>
         <View
@@ -107,7 +130,7 @@ export default function Dashboard({ navigation }) {
             color: "#ffff",
           }}
         >
-          Hello Idiot !
+          Hello {userName}
         </Text>
         <View>
           <Text
@@ -131,39 +154,36 @@ export default function Dashboard({ navigation }) {
             ₦1,500.04
           </Text>
         </View>
-        <View style={{ flexDirection: "row", justifyContent: "flex-end"}}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Registration")}
+        <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+            <View
+              style={{
+                // padding: 2,
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                backgroundColor: "#fafa",
+                borderWidth: 1,
+                borderColor: "#fff",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 5,
+                marginRight: 20,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "600",
+                  lineHeight: 22,
+                  color: "#fff",
+                  marginBottom: 5,
+                }}
               >
-                <View
-            style={{
-              // padding: 2,
-              paddingHorizontal: 10,
-              paddingVertical: 5,
-              backgroundColor: "#fafa",
-              borderWidth: 1,
-              borderColor: "#fff",
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 5,
-              marginRight: 20
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: "600",
-                      lineHeight: 22,
-                      color: "#fff",
-                      marginBottom: 5,
-                    }}
-                  >
-                    Logout
-                  </Text>
-                </View>
-              </TouchableOpacity>
+                Logout
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
-    
       </View>
       <View
         style={{
@@ -179,9 +199,7 @@ export default function Dashboard({ navigation }) {
         <Con>
           <Row>
             <Col numRows={2}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Registration")}
-              >
+              <TouchableOpacity onPress={() => navigation.navigate("Products")}>
                 <View
                   style={{
                     flexDirection: "column",
@@ -221,9 +239,7 @@ export default function Dashboard({ navigation }) {
               </TouchableOpacity>
             </Col>
             <Col numRows={2}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Registration")}
-              >
+              <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
                 <View
                   style={{
                     flexDirection: "column",
@@ -266,7 +282,7 @@ export default function Dashboard({ navigation }) {
           <Row>
             <Col numRows={2}>
               <TouchableOpacity
-                onPress={() => navigation.navigate("Registration")}
+                onPress={() => navigation.navigate("TransactionHistory")}
               >
                 <View
                   style={{
@@ -308,9 +324,7 @@ export default function Dashboard({ navigation }) {
               </TouchableOpacity>
             </Col>
             <Col numRows={2}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Registration")}
-              >
+              <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
                 <View
                   style={{
                     flexDirection: "column",
