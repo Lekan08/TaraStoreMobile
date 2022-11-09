@@ -10,40 +10,57 @@ import {
   FlatList,
   TouchableOpacity,
   Form,
+  Pressable,
   Alert,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import SweetAlert from 'react-native-sweet-alert';
+// import SweetAlert from 'react-native-sweet-alert';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Picker } from "@react-native-picker/picker";
+// import SelectList from "../components/dropdown";
 import AllCountriesAndStates from "../countries-states-master/countries";
+import { REACT_APP_TARA_URL } from "@env";
+// import RNPickerSelect from "react-native-picker-select";
 // import Header from "./components/header";
 // import TodoItem from "./components/todoItem";
 // import AddTodo from "./components/addTodo";
 // import Sandbox from "./components/sandbox";
 // import {Ionicons} from '@ex'
-export default function Registration({ navigation }) {
+export default function Registration({ navigation, route }) {
   const [firstnamex, setFirstname] = useState("");
   const [lastnamex, setLastname] = useState("");
   const [emailx, setEmail] = useState("");
-  const [usernamex, setUsername] = useState("");
   const [cityx, setCity] = useState("");
   const [addressx, setAddress] = useState("");
-  const [passwordx, setPassword] = useState("");
+  const [passwordx, setPassword] = useState(""); 
   const [rPasswordx, setRPassword] = useState("");
   // const [countryx, setCountryx] = useState("");
 
+  const [passwordShown, setPasswordShown] = useState(true);
+  const [rtPasswordShown, setRTPasswordShown] = useState(true);
+
   const { countriesAndStates: AlCountry } = AllCountriesAndStates();
+
+  const data = AlCountry.map((data) => {
+    return { key: data.code3, value: data.name };
+  });
   const [allStates, setAllStates] = useState([]);
   const [residentialStatex, setResidentialState] = useState("");
   const [residentialCountryx, setResidentialCountry] = useState("");
 
   const handleOnChangeRCCountry = (valuex) => {
     console.log(valuex);
-    const filteredItems = AlCountry.filter((item) => item.name === valuex);
-    console.log(filteredItems);
-    setAllStates(filteredItems[0].states);
-    setResidentialCountry(valuex);
+    if (valuex) {
+      const filteredItems = AlCountry.filter((item) => item.name === valuex);
+      console.log(filteredItems);
+      if (filteredItems[0].states || filteredItems[0].states.length !== 0) {
+        setAllStates(filteredItems[0].states);
+        setResidentialCountry(valuex);
+      } else {
+        setAllStates([]);
+      }
+    }
   };
 
   const handleOnChangeRCState = (valuex) => {
@@ -55,17 +72,29 @@ export default function Registration({ navigation }) {
   // };
 
   const handlePress = () => {
+    const rdCartegory = route.params.cartegory;
+    let cartegoryx = [];
+    if (rdCartegory === "RETAILER") {
+      cartegoryx = ["RETAILER"];
+    } else if (rdCartegory === "DISTRIBUTOR") {
+      cartegoryx = ["DISTRIBUTOR"];
+    } else if (rdCartegory === "BOTH") {
+      cartegoryx = ["DISTRIBUTOR", "RETAILER"];
+    }
+    console.log(cartegoryx);
     const raw = JSON.stringify({
+      username: emailx,
       firstname: firstnamex,
       lastname: lastnamex,
-      email: emailx,
-      username: usernamex,
+      email: emailx.toLowerCase(),
       country: residentialCountryx,
       state: residentialStatex,
       city: cityx,
       address: addressx,
       password: passwordx,
+      categories: cartegoryx,
     });
+    console.log(raw);
     const myHeaders = {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -77,21 +106,25 @@ export default function Registration({ navigation }) {
       redirect: "follow",
     };
 
-    const url = "https://tarastoreservice.plutospace.space";
-
-    fetch(`${url}/users/add`, requestOptions)
+    fetch(`${REACT_APP_TARA_URL}/users/add`, requestOptions)
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
         if (result.status === "SUCCESS") {
-          Alert.alert(result.status, result.message);
-          navigation.navigate("Login", { replace: true });
-          //navigate("/authentication/company-Registration", { replace: true });
+          Alert.alert(result.status, result.message, [
+            {
+              text: "Continue",
+              onPress: () => {
+                navigation.navigate("Login", { replace: true });
+              },
+            },
+          ]);
         } else {
           Alert.alert(result.status, result.message);
         }
       })
       .catch((error) => {
+        Alert.alert(error.status, error.message);
         console.log(error);
       });
 
@@ -124,8 +157,6 @@ export default function Registration({ navigation }) {
       lastnamex === "" ||
       emailx.length === 0 ||
       emailx === "" ||
-      usernamex.length === 0 ||
-      usernamex === "" ||
       cityx.length === 0 ||
       cityx === "" ||
       addressx.length === 0 ||
@@ -152,7 +183,7 @@ export default function Registration({ navigation }) {
     //   cancellable: true
     // },
     //   callback => console.log('callback'));
-    
+
     //fetching api
     // const raw = JSON.stringify({
     //   username: usernamex,
@@ -163,8 +194,7 @@ export default function Registration({ navigation }) {
     //   "Content-Type": "application/json",
     // };
 
-    // const url = "https://tarastoreservice.plutospace.space";
-    // fetch(url + "http://users/doLogin", {
+    // fetch(REACT_APP_TARA_URL + "http://users/doLogin", {
     //   method: "GET",
     //   headers: myHeaders,
     //   body: raw,
@@ -173,58 +203,59 @@ export default function Registration({ navigation }) {
 
   return (
     // <Sandbox />
-    <View style={styles.container}>
-      <ScrollView>
-        <View>
-          <Image source={require("../images/house_of_tara_logo.png")} />
-        </View>
-        <View style={{ borderRadius: 5 }}>
-          <Text
-            style={{
-              fontSize: 40,
-              fontWeight: "900",
-              color: "#ffffff",
-              paddingHorizontal: 0,
-              paddingTop: 40,
-              fontFamily: "serif",
-              width: 300,
-            }}
-          >
-            Let’s Help You Find Your Match
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <View>
+            <Image source={require("../images/house_of_tara_logo.png")} />
+          </View>
+          <View style={{ borderRadius: 5 }}>
+            <Text
+              style={{
+                fontSize: 40,
+                fontWeight: "900",
+                color: "#ffffff",
+                paddingHorizontal: 0,
+                paddingTop: 40,
+                fontFamily: "serif",
+                width: 300,
+              }}
+            >
+              Let’s Help You Find Your Match
+            </Text>
+          </View>
+          <Text style={{ color: "#ffffff" }}>
+            Meeting the perfect one shouldn't be a hassle.
           </Text>
-        </View>
-        <Text style={{ color: "#ffffff" }}>
-          Meeting the perfect one shouldn't be a hassle.
-        </Text>
-        <View style={{ paddingTop: 40 }}>
-          <Text style={styles.inputText}>First Name:</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="First Name"
-            value={firstnamex}
-            onChangeText={(value) => setFirstname(value)}
-            style={styles.input}
-            placeholderTextColor={"#777"}
-          />
-          <Text style={styles.inputText}>Last Name:</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="Last Name"
-            value={lastnamex}
-            onChangeText={(value) => setLastname(value)}
-            style={styles.input}
-            placeholderTextColor={"#777"}
-          />
-          <Text style={styles.inputText}>Email:</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="Email"
-            value={emailx}
-            onChangeText={(value) => setEmail(value)}
-            style={styles.input}
-            placeholderTextColor={"#777"}
-          />
-          <Text style={styles.inputText}>Username:</Text>
+          <View style={{ paddingTop: 40 }}>
+            <Text style={styles.inputText}>First Name:</Text>
+            <TextInput
+              keyboardType="default"
+              placeholder="First Name"
+              value={firstnamex}
+              onChangeText={(value) => setFirstname(value)}
+              style={styles.input}
+              placeholderTextColor={"#777"}
+            />
+            <Text style={styles.inputText}>Last Name:</Text>
+            <TextInput
+              keyboardType="default"
+              placeholder="Last Name"
+              value={lastnamex}
+              onChangeText={(value) => setLastname(value)}
+              style={styles.input}
+              placeholderTextColor={"#777"}
+            />
+            <Text style={styles.inputText}>Email:</Text>
+            <TextInput
+              keyboardType="default"
+              placeholder="Email"
+              value={emailx}
+              onChangeText={(value) => setEmail(value)}
+              style={styles.input}
+              placeholderTextColor={"#777"}
+            />
+            {/* <Text style={styles.inputText}>Username:</Text>
           <TextInput
             keyboardType="default"
             placeholder="Username"
@@ -232,92 +263,173 @@ export default function Registration({ navigation }) {
             onChangeText={(value) => setUsername(value)}
             style={styles.input}
             placeholderTextColor={"#777"}
-          />
-          <Picker
-            style={{ color: "#ffffff" }}
-            selectedValue={residentialCountryx}
-            onValueChange={(newValue) => handleOnChangeRCCountry(newValue)}
-          >
-            <Picker.Item label="Select Country" value="" />
-            {AlCountry.map((apic) => (
-              <Picker.Item
-                label={apic.name}
-                key={apic.code3}
-                value={apic.name}
-              />
-            ))}
-          </Picker>
-          <Picker
-            style={{ color: "#ffffff" }}
-            selectedValue={residentialStatex}
-            onValueChange={(newValue) => handleOnChangeRCState(newValue)}
-          >
-            <Picker.Item label=" Select State" value="" />
-            {allStates.map((apic) => (
-              <Picker.Item
-                label={apic.name}
-                key={apic.code3}
-                value={apic.name}
-              />
-            ))}
-          </Picker>
-          <Text style={styles.inputText}>City::</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="City"
-            value={cityx}
-            onChangeText={(value) => setCity(value)}
-            style={styles.input}
-            placeholderTextColor={"#777"}
-          />
-          <Text style={styles.inputText}>House Address:</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="Address"
-            value={addressx}
-            onChangeText={(value) => setAddress(value)}
-            style={styles.input}
-            placeholderTextColor={"#777"}
-          />
-          <Text style={styles.inputText}>Password:</Text>
-          <TextInput
-            placeholder="Password"
-            value={passwordx}
-            onChangeText={(value) => setPassword(value)}
-            style={styles.input}
-            secureTextEntry={true}
-            placeholderTextColor={"#777"}
-          />
-          <Text style={styles.inputText}>Confirm Password:</Text>
-          <TextInput
-            placeholder="Confirm Password"
-            value={rPasswordx}
-            onChangeText={(value) => setRPassword(value)}
-            style={styles.input}
-            secureTextEntry={true}
-            placeholderTextColor={"#777"}
-          />
-          <TouchableOpacity onPress={clickHandler}>
-            <View style={styles.loginButton}>
-              <Text style={styles.loginText}>REGISTER</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{ alignItems: "center" }}>
-          <View
-            style={{
-              paddingTop: 15,
-              flexDirection: "row",
+          /> */}
+
+            {/* <SelectList
+            setSelected={setResidentialCountry}
+            data={data}
+            onSelect={() => handleOnChangeRCCountry(residentialCountryx)}
+            dropdownStyles={{ color: "#fff" }}
+          /> */}
+
+            {/* <RNPickerSelect
+            onValueChange={(value) => console.log(value)}
+            useNativeAndroidPickerStyle={false}
+            placeholder={{
+              label: "Select your favourite language",
+              value: null,
             }}
-          >
-            <Text style={styles.inputText}>Have an account?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-              <Text style={styles.link}>Login</Text>
+            items={[
+              { label: "JavaScript", value: "JavaScript" },
+              { label: "TypeScript", value: "TypeScript" },
+              { label: "Python", value: "Python" },
+              { label: "Java", value: "Java" },
+              { label: "C++", value: "C++" },
+              { label: "C", value: "C" },
+            ]}
+          /> */}
+            <Text style={styles.inputText}>Country:</Text>
+            <View style={styles.pickerContainer}>
+              <Picker
+                style={{
+                  color: "#fff",
+                }}
+                itemStyle={{
+                  backgroundColor: "#F96D02",
+                  color: "#000",
+                  fontFamily: "Ebrima",
+                  fontSize: 19,
+                }}
+                selectedValue={residentialCountryx}
+                onValueChange={(newValue) => handleOnChangeRCCountry(newValue)}
+              >
+                <Picker.Item label="Select Country" value="" />
+                {AlCountry.map((apic) => (
+                  <Picker.Item
+                    label={apic.name}
+                    key={apic.code3}
+                    value={apic.name}
+                  />
+                )
+                )}
+              </Picker>
+            </View>
+            <Text style={styles.inputText}>State:</Text>
+            <View style={styles.pickerContainer}>
+              <Picker
+                style={{ color: "#ffffff" }}
+                selectedValue={residentialStatex}
+                onValueChange={(newValue) => handleOnChangeRCState(newValue)}
+              >
+                <Picker.Item label=" Select State" value="" />
+                {allStates.map((apic) => (
+                  <Picker.Item
+                    label={apic.name}
+                    key={apic.code3}
+                    value={apic.name}
+                  />
+                ))}
+              </Picker>
+            </View>
+            <Text style={styles.inputText}>City:</Text>
+            <TextInput
+              keyboardType="default"
+              placeholder="City"
+              value={cityx}
+              onChangeText={(value) => setCity(value)}
+              style={styles.input}
+              placeholderTextColor={"#777"}
+            />
+            <Text style={styles.inputText}>House Address:</Text>
+            <TextInput
+              keyboardType="default"
+              placeholder="Address"
+              multiline
+              value={addressx}
+              onChangeText={(value) => setAddress(value)}
+              style={styles.input}
+              placeholderTextColor={"#777"}
+            />
+            <Text style={styles.inputText}>Password:</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                placeholder="Password"
+                value={passwordx}
+                onChangeText={(value) => setPassword(value)}
+                secureTextEntry={passwordShown}
+                placeholderTextColor={"#777"}
+                style={styles.inputField}
+                name="password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                textContentType="password"
+                enablesReturnKeyAutomatically
+              />
+              <Pressable
+                onPress={() => {
+                  passwordShown
+                    ? setPasswordShown(false)
+                    : setPasswordShown(true);
+                }}
+              >
+                <Icon
+                  name={passwordShown ? "eye-off" : "eye"}
+                  size={22}
+                  color="grey"
+                />
+              </Pressable>
+            </View>
+            <Text style={styles.inputText}>Confirm Password:</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                placeholder="Confirm Password"
+                value={rPasswordx}
+                onChangeText={(value) => setRPassword(value)}
+                secureTextEntry={rtPasswordShown}
+                placeholderTextColor={"#777"}
+                style={styles.inputField}
+                name="password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                textContentType="newPassword"
+                enablesReturnKeyAutomatically
+              />
+              <Pressable
+                onPress={() => {
+                  rtPasswordShown
+                    ? setRTPasswordShown(false)
+                    : setRTPasswordShown(true);
+                }}
+              >
+                <Icon
+                  name={rtPasswordShown ? "eye-off" : "eye"}
+                  size={22}
+                  color="grey"
+                />
+              </Pressable>
+            </View>
+            <TouchableOpacity onPress={clickHandler}>
+              <View style={styles.loginButton}>
+                <Text style={styles.loginText}>REGISTER</Text>
+              </View>
             </TouchableOpacity>
+          </View>
+          <View style={{ alignItems: "center", marginBottom: 50 }}>
+            <View
+              style={{
+                paddingTop: 15,
+                flexDirection: "row",
+              }}
+            >
+              <Text style={styles.inputText}>Have an account?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                <Text style={styles.link}>Login</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -336,6 +448,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 60,
     justifyContent: "center",
+    paddingBottom:60,
   },
   buttonContainer: {
     marginTop: 20,
@@ -344,12 +457,40 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: "#777",
-    padding: 8,
+    padding: 15,
     margin: 5,
     width: 300,
     color: "#fff",
     paddingHorizontal: 20,
     borderRadius: 50,
+  },
+  inputContainer: {
+    borderWidth: 1,
+    borderColor: "#777",
+    padding: 15,
+    margin: 5,
+    width: 300,
+    color: "#fff",
+    paddingHorizontal: 20,
+    borderRadius: 50,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  inputField: {
+    width: "90%",
+    color: "#fff",
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: "#777",
+    // maxHeight: 40,
+    margin: 5,
+    width: 300,
+    color: "#fff",
+    paddingHorizontal: 20,
+    borderRadius: 50,
+    // flexDirection: "row",
+    // justifycontent: "center",
   },
   loginButton: {
     padding: 15,
@@ -378,6 +519,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#F96D02",
   },
+  itemStyle:{
+  backgroundColor: "#F96D02",
+  color: "#000",
+  fontFamily: "Ebrima",
+  fontSize: 19,
+}
 });
 
 {
