@@ -33,7 +33,7 @@ export default function Registration({ navigation, route }) {
   const [emailx, setEmail] = useState("");
   const [cityx, setCity] = useState("");
   const [addressx, setAddress] = useState("");
-  const [passwordx, setPassword] = useState(""); 
+  const [passwordx, setPassword] = useState("");
   const [rPasswordx, setRPassword] = useState("");
   // const [countryx, setCountryx] = useState("");
 
@@ -324,7 +324,7 @@ export default function Registration({ navigation, route }) {
                 {allStates.map((apic) => (
                   <Picker.Item
                     label={apic.name}
-                    key={apic.code3}
+                    key={apic.code}
                     value={apic.name}
                   />
                 ))}

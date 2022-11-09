@@ -77,26 +77,51 @@ export default function Dashboard({ navigation }) {
         >
           <View
             style={{
-              padding: 10,
-              height: 40,
-              backgroundColor: "#7DE5ED",
-              borderWidth: 3,
-              borderColor: "#fff",
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 5,
-              marginLeft: 20,
+              flexDirection: "row",
             }}
           >
-            <Text
+            <View
               style={{
-                fontSize: 15,
-                fontWeight: "bold",
-                color: "#fff",
+                padding: 10,
+                height: 40,
+                minHeight: 42,
+                backgroundColor: "#f96d02",
+                borderWidth: 3,
+                borderColor: "#fff",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 5,
+                marginLeft: 20,
               }}
             >
-              Switch
-            </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontWeight: "bold",
+                  color: "#fff",
+                }}
+              >
+                Switch
+              </Text>
+            </View>
+            <View
+              style={{
+                minHeight: 42,
+                height: 40,
+                borderColor: "#fff",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "#fff",
+                  fontWeight: "bold",
+                  marginLeft: 20,
+                }}
+              >
+                Retailer
+              </Text>
+            </View>
           </View>
           <View
             style={{
@@ -161,7 +186,7 @@ export default function Dashboard({ navigation }) {
                 // padding: 2,
                 paddingHorizontal: 10,
                 paddingVertical: 5,
-                backgroundColor: "#fafa",
+                backgroundColor: "#f96d02",
                 borderWidth: 1,
                 borderColor: "#fff",
                 justifyContent: "center",

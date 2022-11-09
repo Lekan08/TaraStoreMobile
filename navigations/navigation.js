@@ -13,6 +13,7 @@ import kpurkish from "../screens/kpurkish";
 import { ColorSpace } from "react-native-reanimated";
 import ChangePassword from "../screens/changePassword";
 import Cart from "../screens/cart";
+import ProductDetails from "../screens/productDetails";
 
 const Stack = createStackNavigator();
 
@@ -69,6 +70,12 @@ function NavigationStack() {
             //   headerStyle: { backgroundColor: "tomato" },
           }}
         />
+        <Stack.Screen
+          name="ProductDetails"
+          component={ProductDetails}
+          options={{ title: "Details" }}
+        />
+
         <Stack.Screen
           name="Checkout"
           component={Checkout}

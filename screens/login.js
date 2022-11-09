@@ -219,7 +219,7 @@ export default function Login({ navigation }) {
             </Pressable>
           </View>
 
-          <PayWithFlutterwave
+          {/* <PayWithFlutterwave
             onRedirect={handleOnRedirect}
             options={{
               tx_ref: generateTransactionRef(10),
@@ -254,7 +254,7 @@ export default function Login({ navigation }) {
                 <Text style={styles.loginText}>Pay $500</Text>
               </TouchableOpacity>
             )}
-          />
+          /> */}
           <TouchableOpacity onPress={clickHandler}>
             <View
               style={[
