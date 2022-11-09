@@ -26,6 +26,7 @@ function BottomTabs() {
         name="Dashboard"
         component={Dashboard}
         options={{
+          headerShown: false,
           title: "Dashboard",
           tabBarLabel: "Dashboard",
           tabBarIcon: ({ color, size }) => (

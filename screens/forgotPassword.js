@@ -24,7 +24,7 @@ export default function ForgotPassword({ navigation }) {
   const handlePress = () => {
     const raw = JSON.stringify({
       email: emailx,
-    });
+    }); 
     const myHeaders = {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -34,14 +34,24 @@ export default function ForgotPassword({ navigation }) {
       headers: myHeaders,
       body: raw,
     };
-    fetch("http://localhost:7000/users/forgotPassword", requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
+  const url = "https://tarastoreservice.plutospace.space";
+
+  fetch(`${url}/users/doLogin`, requestOptions)
+    .then((res) => res.json())
+    .then((result) => {
+      if (result.status === "SUCCESS") {
+        Alert.alert(result.status, result.message);
+        navigation.navigate("Dashboard", { replace: true });
+        //navigate("/authentication/company-Registration", { replace: true });
+      } else {
+        Alert.alert(result.status, result.message);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   const clickHandler = () => {
     if (emailx.length === 0 || emailx === "") {
       Alert.alert("You need to enter an Email to continue");
@@ -72,17 +82,17 @@ export default function ForgotPassword({ navigation }) {
             FORGOTTEN YOUR PASSWORD?
           </Text>
         </View>
-        <Text 
-        style={{ 
-          color: "#ffffff" ,
-          fontSize: 20,
-              fontWeight: "50",
-              paddingHorizontal: 0,
-              paddingTop: 10,
-              fontFamily: "serif",
-              width: 200,
+        <Text
+          style={{
+            color: "#ffffff",
+            fontSize: 20,
+            fontWeight: "50",
+            paddingHorizontal: 0,
+            paddingTop: 10,
+            fontFamily: "serif",
+            width: 200,
           }}
-          >
+        >
           Enter the email attached to your account to reset your password.
         </Text>
         <View style={{ paddingTop: 40 }}>
