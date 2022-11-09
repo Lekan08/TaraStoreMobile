@@ -10,6 +10,8 @@ import Welcome from "../screens/welcome";
 import Checkout from "../screens/checkout";
 import Dashboard from "../screens/dashboard";
 import kpurkish from "../screens/kpurkish";
+import Profile from "../screens/profile";
+import EditProfile from "../screens/editprofile";
 import { ColorSpace } from "react-native-reanimated";
 import ChangePassword from "../screens/changePassword";
 import Cart from "../screens/cart";
@@ -27,6 +29,12 @@ function NavigationStack() {
           headerStyle: { backgroundColor: "#F96D02", height: 80 },
         }}
       >
+        {/*       
+      <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{ title: "Profile" }}
+        /> */}
         <Stack.Screen
           name="Login"
           component={Login}
@@ -85,6 +93,12 @@ function NavigationStack() {
           name="changePassword"
           component={ChangePassword}
           options={{ title: "Change your password" }}
+        />
+
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+          options={{ title: "Edit Your Profile" }}
         />
         <Stack.Screen
           name="Cart"

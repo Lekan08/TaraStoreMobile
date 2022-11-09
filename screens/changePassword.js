@@ -14,13 +14,16 @@ import {
   Keyboard,
 } from "react-native";
 
+import { Loader, InnerLoader } from "../components/loader";
+
 export default function ChangePassword({ navigation }) {
   const [usernamex, getUsername] = useState("");
   const [currentPasswordx, getCurrentPassword] = useState("");
   const [newPasswordx, getNewPassword] = useState("");
   const [newRPasswordx, getRNewPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const handlePress = () => {
+    setLoading(true);
     const raw = JSON.stringify({
       username: usernamex,
       password: currentPasswordx,
@@ -42,6 +45,8 @@ export default function ChangePassword({ navigation }) {
     fetch(`${url}/users/changePass`, requestOptions)
       .then((res) => res.json())
       .then((result) => {
+        setLoading(false);
+        console.log(result);
         if (result.status === "SUCCESS") {
           Alert.alert(result.status, result.message, [
             {
@@ -56,6 +61,7 @@ export default function ChangePassword({ navigation }) {
         }
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
   };
@@ -71,7 +77,7 @@ export default function ChangePassword({ navigation }) {
       newRPasswordx.length === 0 ||
       newRPasswordx.length === ""
     ) {
-      Alert.Alert("Please fill all empty textfields");
+      Alert.alert("EMPTY_TEXTFIELDS", "Fill empty textfields");
     }
     // if(newPasswordx !== newRPasswordx){
     //     Alert.Alert("passwords don't match")
@@ -106,7 +112,6 @@ export default function ChangePassword({ navigation }) {
           value={usernamex}
           onChangeText={(value) => getUsername(value)}
           style={styles.input}
-          secureTextEntry={true}
           placeholderTextColor={"#777"}
         />
         <Text style={styles.inputText}>Current password:</Text>
@@ -137,8 +142,14 @@ export default function ChangePassword({ navigation }) {
           placeholderTextColor={"#777"}
         />
         <TouchableOpacity onPress={clickHandler}>
-          <View style={styles.changePassButton}>
+          <View
+            style={[
+              styles.changePassButton,
+              { flexDirection: "row", justifyContent: "center" },
+            ]}
+          >
             <Text style={styles.inputText}>Change password</Text>
+            <InnerLoader animating={loading} color="#fff" size="small" />
           </View>
         </TouchableOpacity>
       </ScrollView>

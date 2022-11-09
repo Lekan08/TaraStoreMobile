@@ -13,6 +13,7 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -154,8 +155,12 @@ export default function Login({ navigation }) {
   };
 
   return (
-    // <Sandbox />
-    <View style={styles.container}>
+    // <Sandbox /> 
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView>
         <View>
           <Image source={require("../images/house_of_tara_logo.png")} />
@@ -168,7 +173,7 @@ export default function Login({ navigation }) {
               color: "#ffffff",
               paddingHorizontal: 0,
               paddingTop: 40,
-              fontFamily: "serif",
+              // fontFamily: "serif",
               width: 300,
             }}
           >
@@ -289,7 +294,8 @@ export default function Login({ navigation }) {
         </View>
       </ScrollView>
       {/* <Loader animating={true} /> */}
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 

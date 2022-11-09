@@ -21,6 +21,8 @@ import { Picker } from "@react-native-picker/picker";
 // import SelectList from "../components/dropdown";
 import AllCountriesAndStates from "../countries-states-master/countries";
 import { REACT_APP_TARA_URL } from "@env";
+
+import { Loader, InnerLoader } from "../components/loader";
 // import RNPickerSelect from "react-native-picker-select";
 // import Header from "./components/header";
 // import TodoItem from "./components/todoItem";
@@ -35,6 +37,8 @@ export default function Registration({ navigation, route }) {
   const [addressx, setAddress] = useState("");
   const [passwordx, setPassword] = useState("");
   const [rPasswordx, setRPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
   // const [countryx, setCountryx] = useState("");
 
   const [passwordShown, setPasswordShown] = useState(true);
@@ -72,6 +76,7 @@ export default function Registration({ navigation, route }) {
   // };
 
   const handlePress = () => {
+    setLoading(true);
     const rdCartegory = route.params.cartegory;
     let cartegoryx = [];
     if (rdCartegory === "RETAILER") {
@@ -109,6 +114,7 @@ export default function Registration({ navigation, route }) {
     fetch(`${REACT_APP_TARA_URL}/users/add`, requestOptions)
       .then((res) => res.json())
       .then((result) => {
+        setLoading(false);
         console.log(result);
         if (result.status === "SUCCESS") {
           Alert.alert(result.status, result.message, [
@@ -124,7 +130,7 @@ export default function Registration({ navigation, route }) {
         }
       })
       .catch((error) => {
-        Alert.alert(error.status, error.message);
+        setLoading(false);
         console.log(error);
       });
 
@@ -166,7 +172,7 @@ export default function Registration({ navigation, route }) {
       rPasswordx.length === 0 ||
       rPasswordx === ""
     ) {
-      Alert.alert("Damm", "You can't fuckin leave this place empty dude!!");
+      Alert.alert("EMPTY_TEXTFIELDS", "Fill empty textfields");
     } else {
       handlePress();
     }
@@ -295,10 +301,10 @@ export default function Registration({ navigation, route }) {
                   color: "#fff",
                 }}
                 itemStyle={{
-                  backgroundColor: "#0f0f",
-                  color: "#fafa",
+                  backgroundColor: "#F96D02",
+                  color: "#000",
                   fontFamily: "Ebrima",
-                  fontSize: 17,
+                  fontSize: 19,
                 }}
                 selectedValue={residentialCountryx}
                 onValueChange={(newValue) => handleOnChangeRCCountry(newValue)}
@@ -310,7 +316,8 @@ export default function Registration({ navigation, route }) {
                     key={apic.code3}
                     value={apic.name}
                   />
-                ))}
+                )
+                )}
               </Picker>
             </View>
             <Text style={styles.inputText}>State:</Text>
@@ -408,8 +415,14 @@ export default function Registration({ navigation, route }) {
               </Pressable>
             </View>
             <TouchableOpacity onPress={clickHandler}>
-              <View style={styles.loginButton}>
+              <View
+                style={[
+                  styles.loginButton,
+                  { flexDirection: "row", justifyContent: "center" },
+                ]}
+              >
                 <Text style={styles.loginText}>REGISTER</Text>
+                <InnerLoader animating={loading} color="#fff" size="small" />
               </View>
             </TouchableOpacity>
           </View>
@@ -447,6 +460,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 60,
     justifyContent: "center",
+    paddingBottom:60,
   },
   buttonContainer: {
     marginTop: 20,
@@ -517,6 +531,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#F96D02",
   },
+  itemStyle:{
+  backgroundColor: "#F96D02",
+  color: "#000",
+  fontFamily: "Ebrima",
+  fontSize: 19,
+}
 });
 
 {
