@@ -54,7 +54,7 @@ export default function ForgotPassword({ navigation }) {
     });
   const clickHandler = () => {
     if (emailx.length === 0 || emailx === "") {
-      Alert.alert("Damm", "You can't fuckin leave this place empty dude!!");
+      Alert.alert("You need to enter an Email to continue");
     } else {
       handlePress();
     }

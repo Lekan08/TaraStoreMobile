@@ -301,10 +301,10 @@ export default function Registration({ navigation, route }) {
                   color: "#fff",
                 }}
                 itemStyle={{
-                  backgroundColor: "#0f0f",
-                  color: "#fafa",
+                  backgroundColor: "#F96D02",
+                  color: "#000",
                   fontFamily: "Ebrima",
-                  fontSize: 17,
+                  fontSize: 19,
                 }}
                 selectedValue={residentialCountryx}
                 onValueChange={(newValue) => handleOnChangeRCCountry(newValue)}
@@ -316,7 +316,8 @@ export default function Registration({ navigation, route }) {
                     key={apic.code3}
                     value={apic.name}
                   />
-                ))}
+                )
+                )}
               </Picker>
             </View>
             <Text style={styles.inputText}>State:</Text>
@@ -459,6 +460,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 60,
     justifyContent: "center",
+    paddingBottom:60,
   },
   buttonContainer: {
     marginTop: 20,
@@ -529,6 +531,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#F96D02",
   },
+  itemStyle:{
+  backgroundColor: "#F96D02",
+  color: "#000",
+  fontFamily: "Ebrima",
+  fontSize: 19,
+}
 });
 
 {
