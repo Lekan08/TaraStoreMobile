@@ -6,7 +6,7 @@ import {
   StyleSheet,
   ScrollView,
   Button,
-  Pressable, 
+  Pressable,
   FlatList,
   TextInput,
   Modal,
@@ -213,6 +213,13 @@ export default function Products({ navigation }) {
   }, []);
 
   const modalView = (item) => {
+    setQuantity(0);
+    setFirstname("");
+    setLastname("");
+    setEmail("");
+    setPno("");
+    setCity("");
+    setAddress("");
     setModalVisible(true);
     setProductName(item.product.name);
     setProductQuantity(item.quantity);
@@ -443,40 +450,41 @@ export default function Products({ navigation }) {
                   <View
                     style={{ flexDirection: "row", alignItems: "flex-end" }}
                   >
-                    <View style={styles.addRemove}>
+                    {/* <View style={styles.addRemove}>
                       <Icon
                         name="remove"
                         size={30}
                         onPress={() => addRemoveQuantity(0)}
                         color="white"
                       />
-                    </View>
+                    </View> */}
                     <TextInput
                       keyboardType="numeric"
                       placeholder="0"
                       value={quantityx}
                       onChangeText={(value) => setQuantity(value)}
-                      style={{
-                        // borderBottomColor: "#777",
-                        // borderBottomWidth: 1,
-                        padding: 5,
-                        width: 40,
-                        color: "#000",
-                        fontWeight: "bold",
-                        textAlign: "center",
-                        // paddingHorizontal: 20,
-                        // borderRadius: 50,
-                      }}
+                      // style={{
+                      //   borderBottomColor: "#777",
+                      //   borderBottomWidth: 1,
+                      //   padding: 5,
+                      //   // width: 40,
+                      //   color: "#000",
+                      //   fontWeight: "bold",
+                      //   // textAlign: "center",
+                      //   // paddingHorizontal: 20,
+                      //   // borderRadius: 50,
+                      // }}
+                      style={styles.input}
                       placeholderTextColor={"#777"}
                     />
-                    <View style={styles.addRemove}>
+                    {/* <View style={styles.addRemove}>
                       <Icon
                         name="add"
                         size={30}
                         onPress={() => addRemoveQuantity(1)}
                         color="white"
                       />
-                    </View>
+                    </View> */}
                   </View>
                   <TouchableOpacity
                     style={{ width: "100%" }}
