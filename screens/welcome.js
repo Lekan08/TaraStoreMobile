@@ -27,7 +27,7 @@ export default function Welcome({ navigation }) {
             style={{
               fontSize: 40,
               fontWeight: "900",
-              color: "#ffffff",
+              color: "#F96D02",
               paddingHorizontal: 0,
               paddingTop: 20,
               // fontFamily: "serif",
@@ -39,10 +39,9 @@ export default function Welcome({ navigation }) {
         </View>
         <Text
           style={{
-            color: "#ffffff",
             fontSize: 20,
             fontWeight: "100",
-            color: "#ffffff",
+            color: "#F96D02",
             paddingHorizontal: 0,
             paddingTop: 10,
             fontFamily: "serif",

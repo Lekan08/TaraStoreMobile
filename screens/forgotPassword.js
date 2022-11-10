@@ -24,7 +24,7 @@ export default function ForgotPassword({ navigation }) {
   const handlePress = () => {
     const raw = JSON.stringify({
       email: emailx,
-    }); 
+    });
     const myHeaders = {
       Accept: "application/json",
       "Content-Type": "application/json",

@@ -218,21 +218,21 @@ export default function Registration({ navigation, route }) {
           <View style={{ borderRadius: 5 }}>
             <Text
               style={{
-                fontSize: 40,
+                fontSize: 30,
                 fontWeight: "900",
-                color: "#ffffff",
+                color: "#F96D02",
                 paddingHorizontal: 0,
                 paddingTop: 40,
                 fontFamily: "serif",
                 width: 300,
               }}
             >
-              Let’s Help You Find Your Match
+              Creativity Is Your Best MakeUp Skill,Don't Be Afraid To Experiment
             </Text>
           </View>
-          <Text style={{ color: "#ffffff" }}>
+          {/* <Text style={{ color: "#ffffff" }}>
             Meeting the perfect one shouldn't be a hassle.
-          </Text>
+          </Text> */}
           <View style={{ paddingTop: 40 }}>
             <Text style={styles.inputText}>First Name:</Text>
             <TextInput
@@ -298,7 +298,7 @@ export default function Registration({ navigation, route }) {
             <View style={styles.pickerContainer}>
               <Picker
                 style={{
-                  color: "#fff",
+                  color: "#F96D02",
                 }}
                 itemStyle={{
                   backgroundColor: "#F96D02",
@@ -316,14 +316,13 @@ export default function Registration({ navigation, route }) {
                     key={apic.code3}
                     value={apic.name}
                   />
-                )
-                )}
+                ))}
               </Picker>
             </View>
             <Text style={styles.inputText}>State:</Text>
             <View style={styles.pickerContainer}>
               <Picker
-                style={{ color: "#ffffff" }}
+                style={{ color: "#F96D02" }}
                 selectedValue={residentialStatex}
                 onValueChange={(newValue) => handleOnChangeRCState(newValue)}
               >
@@ -460,7 +459,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 60,
     justifyContent: "center",
-    paddingBottom:60,
+    paddingBottom: 60,
   },
   buttonContainer: {
     marginTop: 20,
@@ -509,7 +508,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     backgroundColor: "#F96D02",
     marginHorizontal: 10,
-    borderRadius: 50,
+    borderRadius: 20,
   },
   loginText: {
     textAlign: "center",
@@ -518,7 +517,7 @@ const styles = StyleSheet.create({
   inputText: {
     marginTop: 10,
     alignSelf: "center",
-    color: "#fff",
+    color: "#F96D02",
   },
   item: {
     padding: 30,
@@ -531,12 +530,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#F96D02",
   },
-  itemStyle:{
-  backgroundColor: "#F96D02",
-  color: "#000",
-  fontFamily: "Ebrima",
-  fontSize: 19,
-}
+  itemStyle: {
+    backgroundColor: "#F96D02",
+    color: "#000",
+    fontFamily: "Ebrima",
+    fontSize: 19,
+  },
 });
 
 {
