@@ -330,7 +330,7 @@ export default function Registration({ navigation, route }) {
                 {allStates.map((apic) => (
                   <Picker.Item
                     label={apic.name}
-                    key={apic.code3}
+                    key={apic.code}
                     value={apic.name}
                   />
                 ))}

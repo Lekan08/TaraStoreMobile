@@ -66,7 +66,7 @@ export default function Profile({ navigation }) {
             marginLeft: 20,
           }}
         >
-          Firstname: {firstName}
+          Firstname: {firstName} 
         </Text>
 
         <Text

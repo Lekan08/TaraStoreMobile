@@ -16,6 +16,7 @@ import { ColorSpace } from "react-native-reanimated";
 import Appintro from "../screens/Appintro";
 import ChangePassword from "../screens/changePassword";
 import Cart from "../screens/cart";
+import ProductDetails from "../screens/productDetails";
 
 const Stack = createStackNavigator();
 
@@ -82,6 +83,17 @@ function NavigationStack() {
             headerShown: false,
             //   headerStyle: { backgroundColor: "tomato" },
           }}
+        />
+        <Stack.Screen
+          name="ProductDetails"
+          component={ProductDetails}
+          options={{ title: "Details" }}
+        />
+
+        <Stack.Screen
+          name="Checkout"
+          component={Checkout}
+          options={{ title: "Checkout" }}
         />
         <Stack.Screen
           name="changePassword"

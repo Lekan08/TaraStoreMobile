@@ -172,43 +172,42 @@ export default function Login({ navigation }) {
                 />
               </Pressable>
             </View>
-
-            <PayWithFlutterwave
-              onRedirect={handleOnRedirect}
-              options={{
-                tx_ref: generateTransactionRef(10),
-                authorization: `${FLUTTER_AUTH_KEY}`,
-                customer: {
-                  email: "user@gmail.com",
-                },
-                amount: 2000,
-                currency: "NGN",
-                payment_options: "card",
-              }}
-            />
-            <PayWithFlutterwave
-              onRedirect={handleOnRedirect}
-              options={{
-                tx_ref: generateTransactionRef(10),
-                authorization: `${FLUTTER_AUTH_KEY}`,
-                customer: {
-                  email: "customer-email@example.com",
-                },
-                amount: 2000,
-                currency: "NGN",
-                payment_options: "card",
-              }}
-              customButton={(props) => (
-                <TouchableOpacity
-                  style={styles.loginButton}
-                  onPress={props.onPress}
-                  isBusy={props.isInitializing}
-                  disabled={props.disabled}
-                >
-                  <Text style={styles.loginText}>Pay $500</Text>
-                </TouchableOpacity>
-              )}
-            />
+            {/* <PayWithFlutterwave
+            onRedirect={handleOnRedirect}
+            options={{
+              tx_ref: generateTransactionRef(10),
+              authorization: `${FLUTTER_AUTH_KEY}`,
+              customer: {
+                email: "user@gmail.com",
+              },
+              amount: 2000,
+              currency: "NGN",
+              payment_options: "card",
+            }}
+          />
+          <PayWithFlutterwave
+            onRedirect={handleOnRedirect}
+            options={{
+              tx_ref: generateTransactionRef(10),
+              authorization: `${FLUTTER_AUTH_KEY}`,
+              customer: {
+                email: "customer-email@example.com",
+              },
+              amount: 2000,
+              currency: "NGN",
+              payment_options: "card",
+            }}
+            customButton={(props) => (
+              <TouchableOpacity
+                style={styles.loginButton}
+                onPress={props.onPress}
+                isBusy={props.isInitializing}
+                disabled={props.disabled}
+              >
+                <Text style={styles.loginText}>Pay $500</Text>
+              </TouchableOpacity>
+            )}
+          /> */}
             <TouchableOpacity onPress={clickHandler}>
               <View
                 style={[
@@ -219,6 +218,54 @@ export default function Login({ navigation }) {
                 <Text style={styles.loginText}>LOGIN</Text>
                 <InnerLoader animating={loading} color="#fff" size="small" />
               </View>
+
+              <PayWithFlutterwave
+                onRedirect={handleOnRedirect}
+                options={{
+                  tx_ref: generateTransactionRef(10),
+                  authorization: `${FLUTTER_AUTH_KEY}`,
+                  customer: {
+                    email: "user@gmail.com",
+                  },
+                  amount: 2000,
+                  currency: "NGN",
+                  payment_options: "card",
+                }}
+              />
+              <PayWithFlutterwave
+                onRedirect={handleOnRedirect}
+                options={{
+                  tx_ref: generateTransactionRef(10),
+                  authorization: `${FLUTTER_AUTH_KEY}`,
+                  customer: {
+                    email: "customer-email@example.com",
+                  },
+                  amount: 2000,
+                  currency: "NGN",
+                  payment_options: "card",
+                }}
+                customButton={(props) => (
+                  <TouchableOpacity
+                    style={styles.loginButton}
+                    onPress={props.onPress}
+                    isBusy={props.isInitializing}
+                    disabled={props.disabled}
+                  >
+                    <Text style={styles.loginText}>Pay $500</Text>
+                  </TouchableOpacity>
+                )}
+              />
+              <TouchableOpacity onPress={clickHandler}>
+                <View
+                  style={[
+                    styles.loginButton,
+                    { flexDirection: "row", justifyContent: "center" },
+                  ]}
+                >
+                  <Text style={styles.loginText}>LOGIN</Text>
+                  <InnerLoader animating={loading} color="#fff" size="small" />
+                </View>
+              </TouchableOpacity>
             </TouchableOpacity>
           </View>
           <View style={{ alignItems: "center" }}>
