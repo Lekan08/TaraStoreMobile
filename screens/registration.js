@@ -21,6 +21,8 @@ import { Picker } from "@react-native-picker/picker";
 // import SelectList from "../components/dropdown";
 import AllCountriesAndStates from "../countries-states-master/countries";
 import { REACT_APP_TARA_URL } from "@env";
+
+import { Loader, InnerLoader } from "../components/loader";
 // import RNPickerSelect from "react-native-picker-select";
 // import Header from "./components/header";
 // import TodoItem from "./components/todoItem";
@@ -33,8 +35,10 @@ export default function Registration({ navigation, route }) {
   const [emailx, setEmail] = useState("");
   const [cityx, setCity] = useState("");
   const [addressx, setAddress] = useState("");
-  const [passwordx, setPassword] = useState(""); 
+  const [passwordx, setPassword] = useState("");
   const [rPasswordx, setRPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
   // const [countryx, setCountryx] = useState("");
 
   const [passwordShown, setPasswordShown] = useState(true);
@@ -72,6 +76,7 @@ export default function Registration({ navigation, route }) {
   // };
 
   const handlePress = () => {
+    setLoading(true);
     const rdCartegory = route.params.cartegory;
     let cartegoryx = [];
     if (rdCartegory === "RETAILER") {
@@ -109,6 +114,7 @@ export default function Registration({ navigation, route }) {
     fetch(`${REACT_APP_TARA_URL}/users/add`, requestOptions)
       .then((res) => res.json())
       .then((result) => {
+        setLoading(false);
         console.log(result);
         if (result.status === "SUCCESS") {
           Alert.alert(result.status, result.message, [
@@ -124,7 +130,7 @@ export default function Registration({ navigation, route }) {
         }
       })
       .catch((error) => {
-        Alert.alert(error.status, error.message);
+        setLoading(false);
         console.log(error);
       });
 
@@ -166,7 +172,7 @@ export default function Registration({ navigation, route }) {
       rPasswordx.length === 0 ||
       rPasswordx === ""
     ) {
-      Alert.alert("Damm", "You can't fuckin leave this place empty dude!!");
+      Alert.alert("EMPTY_TEXTFIELDS", "Fill empty textfields");
     } else {
       handlePress();
     }
@@ -325,7 +331,7 @@ export default function Registration({ navigation, route }) {
                 {allStates.map((apic) => (
                   <Picker.Item
                     label={apic.name}
-                    key={apic.code3}
+                    key={apic.code}
                     value={apic.name}
                   />
                 ))}
@@ -409,8 +415,14 @@ export default function Registration({ navigation, route }) {
               </Pressable>
             </View>
             <TouchableOpacity onPress={clickHandler}>
-              <View style={styles.loginButton}>
+              <View
+                style={[
+                  styles.loginButton,
+                  { flexDirection: "row", justifyContent: "center" },
+                ]}
+              >
                 <Text style={styles.loginText}>REGISTER</Text>
+                <InnerLoader animating={loading} color="#fff" size="small" />
               </View>
             </TouchableOpacity>
           </View>
