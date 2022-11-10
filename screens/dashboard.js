@@ -79,8 +79,8 @@ export default function Dashboard({ navigation }) {
             style={{
               padding: 10,
               height: 40,
-              backgroundColor: "#7DE5ED",
-              borderWidth: 3,
+              backgroundColor: "black",
+              borderWidth: 1,
               borderColor: "#fff",
               justifyContent: "center",
               alignItems: "center",
