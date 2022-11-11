@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
+import { MaterialIcons } from "@expo/vector-icons";
 import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 
@@ -24,7 +25,7 @@ const slides = [
   },
 ];
 
-export default function Appiintro({ navigation }) {
+export default function Appintro({ navigation }) {
   const [showHomePage, setshowHomePage] = useState(false);
   const _renderItem = ({ item }) => {
     return (
@@ -33,7 +34,7 @@ export default function Appiintro({ navigation }) {
           source={item.image}
           style={{
             resizeMode: "cover",
-            height: "60%",
+            height: "70%",
             width: "100%",
             borderBottomLeftRadius: 35,
             borderBottomRightRadius: 35,
@@ -62,15 +63,53 @@ export default function Appiintro({ navigation }) {
         >
           {item.text}
         </Text>
-
-        <TouchableOpacity
-          style={{ width: 300, paddingTop: 10 }}
-          onPress={() => navigation.navigate("Login")}
+        {/* {item.key === "three" && (
+          <TouchableOpacity
+            style={{ width: 300, paddingTop: 10 }}
+            onPress={() => navigation.navigate("Login")}
+          >
+            <View style={styles.loginButton}>
+              <Text style={styles.loginText}>LOGIN</Text>
+            </View>
+          </TouchableOpacity>
+        )} */}
+      </View>
+    );
+  };
+  const _renderNextButton = () => {
+    return (
+      <View style={styles.buttonCircle}>
+        <MaterialIcons name="navigate-next" size={24} color="black" />
+      </View>
+    );
+  };
+  const _renderDoneButton = () => {
+    return (
+      <View style={styles.buttonCircle}>
+        <MaterialIcons name="done" size={24} color="black" />
+      </View>
+    );
+  };
+  const _renderPrevButton = () => {
+    return (
+      <View style={styles.buttonCircle}>
+        <MaterialIcons name="navigate-before" size={24} color="black" />
+      </View>
+    );
+  };
+  const _renderSkipButton = () => {
+    return (
+      <View>
+        <Text
+          style={{
+            color: "#777",
+            fontWeight: "700",
+            fontSize: 20,
+            letterSpacing: 1,
+          }}
         >
-          <View style={styles.loginButton}>
-            <Text style={styles.loginText}>LOGIN</Text>
-          </View>
-        </TouchableOpacity>
+          skip
+        </Text>
       </View>
     );
   };
@@ -80,8 +119,17 @@ export default function Appiintro({ navigation }) {
   } else
     return (
       <AppIntroSlider
+        onDone={() => navigation.navigate("Login")}
         renderItem={_renderItem}
         data={slides}
+        doneLabel="Continue"
+        skipLabel="Skip"
+        renderPrevButton={_renderPrevButton}
+        renderDoneButton={_renderDoneButton}
+        renderNextButton={_renderNextButton}
+        renderSkipButton={_renderSkipButton}
+        showSkipButton={true}
+        showPrevButton={true}
         dotStyle={{
           backgroundColor: "#0f0f0f",
         }}
@@ -113,5 +161,21 @@ const styles = StyleSheet.create({
   loginText: {
     textAlign: "center",
     color: "#fff",
+  },
+  buttonCircle: {
+    width: 40,
+    height: 40,
+    backgroundColor: "rgba(0, 0, 0, .2)",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textSquare: {
+    width: 40,
+    height: 40,
+    backgroundColor: "#f96d02",
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

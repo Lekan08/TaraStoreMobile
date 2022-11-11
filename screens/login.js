@@ -209,29 +209,6 @@ export default function Login({ navigation }) {
             )}
           /> */}
             <TouchableOpacity onPress={clickHandler}>
-              <View
-                style={[
-                  styles.loginButton,
-                  { flexDirection: "row", justifyContent: "center" },
-                ]}
-              >
-                <Text style={styles.loginText}>LOGIN</Text>
-                <InnerLoader animating={loading} color="#fff" size="small" />
-              </View>
-
-              <PayWithFlutterwave
-                onRedirect={handleOnRedirect}
-                options={{
-                  tx_ref: generateTransactionRef(10),
-                  authorization: `${FLUTTER_AUTH_KEY}`,
-                  customer: {
-                    email: "user@gmail.com",
-                  },
-                  amount: 2000,
-                  currency: "NGN",
-                  payment_options: "card",
-                }}
-              />
               <PayWithFlutterwave
                 onRedirect={handleOnRedirect}
                 options={{

@@ -109,7 +109,11 @@ function NavigationStack() {
         <Stack.Screen
           name="Cart"
           component={Cart}
-          options={{ title: "Cart", headerShown: false }}
+          options={{
+            title: "Cart",
+            headerTintColor: "white",
+            headerStyle: { backgroundColor: "#F96D02", height: 80 },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
