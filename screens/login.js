@@ -132,7 +132,7 @@ export default function Login({ navigation }) {
           <Text style={{ color: "#F96D02" }}>
             Meeting the perfect one shouldn’t be a hassle.
           </Text>
-          <Text
+          {/* <Text
             ellipsizeMode="tail"
             numberOfLines={2}
             style={{
@@ -148,7 +148,7 @@ export default function Login({ navigation }) {
           >
             kpurkish scjnvdnabHdvnsiudngernfsjmviudsfvngregvuireiuf ewufefg
             cursusndvjbrgrfjbnrfmgi0dsfketkeucsnt3gmf r vdv mfg, egh4tk4lnjegtih
-          </Text>
+          </Text> */}
           <View style={{ paddingTop: 40 }}>
             <Text style={styles.inputText}>Username:</Text>
             <TextInput

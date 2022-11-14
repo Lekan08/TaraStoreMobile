@@ -14,6 +14,7 @@ import Profile from "../screens/profile";
 import EditProfile from "../screens/editprofile";
 import { ColorSpace } from "react-native-reanimated";
 import Appintro from "../screens/Appintro";
+import Dashboard2 from "../screens/dashboard2";
 import ChangePassword from "../screens/changePassword";
 import Cart from "../screens/cart";
 import ProductDetails from "../screens/productDetails";
@@ -30,6 +31,11 @@ function NavigationStack() {
           headerStyle: { height: 0 },
         }}
       >
+        {/* <Stack.Screen
+          name="Dashboard2"
+          component={Dashboard2}
+          options={{ title: "Dashboard2" }}
+        /> */}
         <Stack.Screen
           name="Appintro"
           component={Appintro}
@@ -60,7 +66,6 @@ function NavigationStack() {
             //   headerStyle: { backgroundColor: "tomato" },
           }}
         />
-
         <Stack.Screen
           name="Registration"
           component={Registration}
@@ -74,7 +79,6 @@ function NavigationStack() {
           component={ForgotPassword}
           options={{ title: "Forgot Password" }}
         />
-
         <Stack.Screen
           name="Home"
           component={BottomTabs}
@@ -89,7 +93,6 @@ function NavigationStack() {
           component={ProductDetails}
           options={{ title: "Details" }}
         />
-
         <Stack.Screen
           name="Checkout"
           component={Checkout}
@@ -100,7 +103,6 @@ function NavigationStack() {
           component={ChangePassword}
           options={{ title: "Change your password" }}
         />
-
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}

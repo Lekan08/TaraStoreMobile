@@ -38,10 +38,6 @@ export default function Dashboard({ navigation }) {
 
   // const url = "https://tarastoreservice.plutospace.space";
   const [userName, setUserName] = useState("");
-  const [userData, setUserData] = useState([]);
-  const [categories, setCategories] = useState("");
-  const [cater, setCater] = useState(true);
-  const [bGCol, setBGCol] = useState("");
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
@@ -50,8 +46,6 @@ export default function Dashboard({ navigation }) {
         try {
           const userData = JSON.parse(await AsyncStorage.getItem("userInfo"));
           setUserName(`${userData.firstname} ${userData.lastname}`);
-          setCategories(userData.categories[0]);
-          setUserData(userData);
         } catch (error) {
           console.log(error);
         }
@@ -63,33 +57,13 @@ export default function Dashboard({ navigation }) {
     };
   }, []);
 
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      if (cater === true) {
-        setCategories("DISTRIBUTOR");
-        setBGCol("#f96d02");
-      } else if (cater === false) {
-        setCategories("RETAILER");
-        setBGCol("#425F57");
-      }
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [cater]);
-
-  const clickHandler = () => {
-    setCater(!cater);
-  };
-
   return (
     <View style={globalStyles.dashContainer}>
       <View
         style={{
           height: "50%",
           maxHeight: "50%",
-          backgroundColor: bGCol,
+          backgroundColor: "#425F57",
           borderBottomLeftRadius: 30,
           borderBottomRightRadius: 30,
         }}
@@ -106,33 +80,48 @@ export default function Dashboard({ navigation }) {
               flexDirection: "row",
             }}
           >
-            <TouchableOpacity onPress={clickHandler}>
-              <View
+            <View
+              style={{
+                padding: 10,
+                height: 40,
+                minHeight: 42,
+                backgroundColor: "#f96d02",
+                borderWidth: 3,
+                borderColor: "#fff",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 5,
+                marginLeft: 20,
+              }}
+            >
+              <Text
                 style={{
-                  padding: 10,
-                  height: 40,
-                  minHeight: 42,
-                  backgroundColor: "#000",
-                  borderWidth: 3,
-                  borderColor: "#fff",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: 8,
-                  marginLeft: 20,
-                  // marginTop: 50,
+                  fontSize: 13,
+                  fontWeight: "bold",
+                  color: "#fff",
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 13,
-                    fontWeight: "bold",
-                    color: "#fff",
-                  }}
-                >
-                  Switch Repository
-                </Text>
-              </View>
-            </TouchableOpacity>
+                Switch Repository
+              </Text>
+            </View>
+            <View
+              style={{
+                minHeight: 42,
+                height: 40,
+                borderColor: "#fff",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "#fff",
+                  fontWeight: "bold",
+                  marginLeft: 20,
+                }}
+              >
+                Retailer
+              </Text>
+            </View>
           </View>
           <View
             style={{
@@ -153,24 +142,6 @@ export default function Dashboard({ navigation }) {
             />
           </View>
         </View>
-
-        <View
-          style={{
-            marginBottom: -20,
-          }}
-        />
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "bold",
-            marginLeft: 20,
-            marginBottom: 20,
-            color: "#ffff",
-          }}
-        >
-          {categories}
-        </Text>
-        <View></View>
         <View
           style={{
             marginBottom: -10,
@@ -190,7 +161,7 @@ export default function Dashboard({ navigation }) {
           <Text
             style={{
               fontSize: 20,
-              marginButtom: 30,
+              marginTop: 30,
               marginLeft: 20,
               color: "#ffff",
             }}
@@ -222,7 +193,6 @@ export default function Dashboard({ navigation }) {
                 alignItems: "center",
                 borderRadius: 5,
                 marginRight: 20,
-                marginBottom: 5,
               }}
             >
               <Text

@@ -340,7 +340,6 @@ function Cart() {
                           Description:
                         </Text>{" "}
                         {item.product.description}
-                        ,kgflhkkuygtftgkgtyc5de5yrfiybecryehc8oecueryufhofyi7cyrehc08pf8jfpuyg7gtyfryfry8rrfrvr,tbntbnkbybng,n,ykn;tlvfn,hbljfkbyljnhbkmhylnktlb;y,gl4jgl
                       </Text>
                     </View>
                     <View
