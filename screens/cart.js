@@ -12,6 +12,7 @@ import {
   Modal,
   Alert,
   RefreshControl,
+  Dimensions,
   TouchableOpacity,
 } from "react-native";
 import Icon from "@expo/vector-icons/MaterialIcons";
@@ -33,6 +34,7 @@ function Cart() {
   const [quantityx, setQuantity] = useState(0);
 
   const isFocused = useIsFocused();
+  const screenWidth = Dimensions.get("screen").width;
 
   function getAllImage(ddata, result) {
     const myHeaders = {
@@ -222,7 +224,7 @@ function Cart() {
           <TextInput
             keyboardType="default"
             onChangeText={(value) => searchFunc(value)}
-            placeholder="Search Products"
+            placeholder="Search Cart"
             placeholderTextColor={"#fff"}
             style={{ width: "90%", color: "#fff" }}
             autoCapitalize="none"
@@ -256,35 +258,91 @@ function Cart() {
             const imagee = `${item.image}`;
             console.log(imagee);
             return (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ProductDetails", item)}
+              // <TouchableOpacity
+              //   onPress={() => navigation.navigate("ProductDetails", item)}
+              // >
+              <View
+                style={{
+                  backgroundColor: "#ffff",
+                  width: screenWidth - 30,
+                  maxWidth: screenWidth,
+                  borderRadius: 5,
+                  padding: 5,
+                  margin: 5,
+                }}
               >
                 <View
                   style={{
-                    backgroundColor: "#BAD1C2",
-                    height: 200,
-                    width: "100%",
-                    maxWidth: "100%",
-                    borderRadius: 10,
-                    padding: 5,
-                    margin: 5,
                     flexDirection: "row",
+                    marginBottom: 5,
                   }}
                 >
                   <Image
                     source={{ uri: imagee }}
                     style={{
-                      marginTop: 40,
-                      width: 110,
-                      borderRadius: 10,
-                      height: 130,
+                      width: 100,
+                      borderRadius: 5,
+                      height: 100,
                     }}
                   />
                   <View
                     style={{
                       marginLeft: 9,
+                      flexDirection: "column",
                     }}
                   >
+                    <View
+                      style={{
+                        paddingHorizontal: 5,
+                        paddingVertical: 2,
+                        alignSelf: "flex-end",
+                      }}
+                    >
+                      <Text
+                        ellipsizeMode="tail"
+                        numberOfLines={1}
+                        style={{
+                          width: 195,
+                          fontSize: 13,
+                          fontWeight: "800",
+                          color: "#F96D02",
+                          paddingHorizontal: 0,
+                        }}
+                      >
+                        {item.product.name}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        paddingHorizontal: 5,
+                        // paddingVertical: 5,
+                        alignSelf: "flex-end",
+                      }}
+                    >
+                      <Text
+                        ellipsizeMode="tail"
+                        numberOfLines={2}
+                        style={{
+                          width: 195,
+                          fontSize: 13,
+                          fontWeight: "400",
+                          color: "#000",
+                          paddingHorizontal: 0,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontWeight: "900",
+                            color: "#000",
+                          }}
+                        >
+                          Description:
+                        </Text>{" "}
+                        {item.product.description}
+                        ,kgflhkkuygtftgkgtyc5de5yrfiybecryehc8oecueryufhofyi7cyrehc08pf8jfpuyg7gtyfryfry8rrfrvr,tbntbnkbybng,n,ykn;tlvfn,hbljfkbyljnhbkmhylnktlb;y,gl4jgl
+                      </Text>
+                    </View>
                     <View
                       style={
                         {
@@ -296,26 +354,9 @@ function Cart() {
                     >
                       <Text
                         style={{
-                          fontSize: 20,
-                          fontWeight: "800",
-                          alignSelf: "center",
-                        }}
-                      >
-                        {item.product.name}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        paddingHorizontal: 5,
-                        paddingVertical: 5,
-                        // alignSelf: "flex-end",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          marginTop: 125,
+                          marginTop: 5,
                           fontWeight: "bold",
-                          marginLeft: 20,
+                          marginLeft: 5,
                           fontSize: 20,
                         }}
                       >
@@ -323,46 +364,42 @@ function Cart() {
                       </Text>
                     </View>
                   </View>
-
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: "row",
-                      justifyContent: "center",
+                </View>
+                <View
+                  style={{
+                    borderTopColor: "#0f0f0f",
+                    borderTopWidth: 1,
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                    // marginRight: 10,
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() => {
+                      modalView(item);
+                      setProductID(item.productId);
                     }}
                   >
-                    <View
-                      style={{
-                        paddingHorizontal: 5,
-                        paddingVertical: 5,
-                        marginRight: 50,
-                        alignSelf: "flex-end",
-                        width: "100%",
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => {
-                          modalView(item);
-                          setProductID(item.productId);
+                    <View style={[styles.purchaseButton, { marginTop: 5 }]}>
+                      <Text
+                        style={{
+                          color: "#fff",
+                          fontWeight: "bold",
+                          textAlign: "center",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          alignContent: "center",
+                          textTransform: "uppercase",
+                          alignSelf: "center",
+                          fontSize: 13,
                         }}
                       >
-                        <View style={styles.purchaseButton}>
-                          <Text
-                            style={{
-                              color: "#fff",
-                              fontWeight: "bold",
-                              marginRight: 15,
-                              textTransform: "uppercase",
-                              alignSelf: "center",
-                              fontSize: 12,
-                            }}
-                          >
-                            Request Purchase
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
+                        Pay
+                      </Text>
                     </View>
-                    {/* <View
+                  </TouchableOpacity>
+
+                  {/* <View
                       style={{
                         backgroundColor: "#FFB9B9",
                         justifyContent: "center",
@@ -376,9 +413,9 @@ function Cart() {
                     >
                       <Icon name="cart-outline" size={25} color="#bb32fe" />
                     </View> */}
-                  </View>
                 </View>
-              </TouchableOpacity>
+              </View>
+              //  </TouchableOpacity>
             );
           }}
         />
@@ -417,7 +454,7 @@ const styles = StyleSheet.create({
   purchaseButton: {
     padding: 10,
     backgroundColor: "#F96D02",
-    width: "120%",
+    width: "100%",
     borderRadius: 5,
   },
   pickerContainer: {

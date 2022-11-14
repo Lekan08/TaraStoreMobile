@@ -250,7 +250,7 @@ export default function Dashboard({ navigation }) {
                   </Text>
                   <View
                     style={{
-                      backgroundColor: "#FFB9B9",
+                      backgroundColor: "#ffff",
                       justifyContent: "center",
                       alignItems: "center",
                       height: 40,
@@ -258,7 +258,7 @@ export default function Dashboard({ navigation }) {
                       borderRadius: 50,
                     }}
                   >
-                    <Icon name="view-grid-outline" size={28} color="#FFF" />
+                    <Icon name="view-grid-outline" size={28} color="#0f0f0f" />
                   </View>
                 </View>
               </TouchableOpacity>
@@ -290,7 +290,7 @@ export default function Dashboard({ navigation }) {
                   </Text>
                   <View
                     style={{
-                      backgroundColor: "#9CFF2E",
+                      backgroundColor: "#ffff",
                       justifyContent: "center",
                       alignItems: "center",
                       height: 40,
@@ -298,7 +298,7 @@ export default function Dashboard({ navigation }) {
                       borderRadius: 50,
                     }}
                   >
-                    <Icon name="account" size={28} color="#FFF" />
+                    <Icon name="account" size={28} color="#0f0f0f" />
                   </View>
                 </View>
               </TouchableOpacity>
@@ -335,7 +335,7 @@ export default function Dashboard({ navigation }) {
                   </Text>
                   <View
                     style={{
-                      backgroundColor: "#fafa",
+                      backgroundColor: "#ffff",
                       justifyContent: "center",
                       alignItems: "center",
                       height: 40,
@@ -343,7 +343,7 @@ export default function Dashboard({ navigation }) {
                       borderRadius: 50,
                     }}
                   >
-                    <Icon name="history" size={28} color="#FFF" />
+                    <Icon name="history" size={28} color="#0f0f0f" />
                   </View>
                 </View>
               </TouchableOpacity>
@@ -376,7 +376,7 @@ export default function Dashboard({ navigation }) {
                   </Text>
                   <View
                     style={{
-                      backgroundColor: "#7DE5ED",
+                      backgroundColor: "#ffff",
                       justifyContent: "center",
                       alignItems: "center",
                       height: 40,
@@ -384,7 +384,7 @@ export default function Dashboard({ navigation }) {
                       borderRadius: 50,
                     }}
                   >
-                    <Icon name="cart" size={28} color="#FFF" />
+                    <Icon name="cart" size={28} color="#0f0f0f" />
                   </View>
                 </View>
               </TouchableOpacity>
